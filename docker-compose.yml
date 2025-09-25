@@ -1,0 +1,17 @@
+services:
+  backend:
+    image: backend_unstable
+    ports:
+      - 9999:9999
+
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: example
+ 
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080

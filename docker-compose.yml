@@ -1,8 +1,10 @@
 services:
   backend:
-    image: backend_unstable
+    image: unstable_backend 
     ports:
       - 9999:9999
+    volumes:
+      - ./backend/app:/app 
 
   db:
     image: postgres

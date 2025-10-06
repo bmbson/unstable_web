@@ -14,7 +14,6 @@ def get_session():
         yield session
 
 
-# https://fastapi.tiangolo.com/tutorial/sql-databases/?h=sessiondep#create-a-session-dependency
 SessionDep = Annotated[Session, Depends(get_session)]
 
 
@@ -25,6 +24,9 @@ def create_db_and_tables():
 class Mix(SQLModel, table=True):
     id: int | None = Field(default=None, primary_key=True)
     mixTitle: str
+    mixCreator: str
+    audioFile: object()
+    imageFile: object()
 
 
 @app.on_event("startup")

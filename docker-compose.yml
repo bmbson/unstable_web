@@ -25,7 +25,7 @@ services:
       - 8080:8080
 
   upload-page:
-    image:
+    image: unstable-upload-page
     restart: always
     ports:
       - 7777:7777

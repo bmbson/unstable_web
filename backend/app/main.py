@@ -25,8 +25,6 @@ class Mix(SQLModel, table=True):
     id: int | None = Field(default=None, primary_key=True)
     mixTitle: str
     mixCreator: str
-    audioFile: object()
-    imageFile: object()
 
 
 @app.on_event("startup")

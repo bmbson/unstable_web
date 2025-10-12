@@ -2,7 +2,7 @@ services:
   backend:
     depends_on:
       - db  
-    image: unstable_backend 
+    image: unstable-backend 
     ports:
       - 9999:9999
     volumes:

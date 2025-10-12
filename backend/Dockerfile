@@ -2,9 +2,10 @@ FROM python:latest
 
 WORKDIR /app
 
-COPY ./app/requirements.txt /app/requirements.txt
+RUN pip install "fastapi[standard]"
 
-RUN pip install --no-cache-dir --upgrade -r /app/requirements.txt
+RUN pip install "sqlmodel"
+RUN pip install "psycopg2"
 
 COPY ./app /app
 

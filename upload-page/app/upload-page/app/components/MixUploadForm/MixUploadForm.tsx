@@ -4,7 +4,7 @@ import "./style.css"
 export default function MixUploadForm() {
 	function uploadMix(formData: FormData) {
 		console.log('attempting get request...');
-		fetch("http://localhost:9999/", { method: "GET" })
+		fetch("http://10.1.0.10:9999/", { method: "GET" })
 			.then((response) => response.json())
 			.then((json) => console.log(json));
 

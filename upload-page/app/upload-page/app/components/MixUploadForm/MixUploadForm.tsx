@@ -19,13 +19,13 @@ export default function MixUploadForm() {
 			<form id="MixUploadForm" action={uploadMix}>
 				<h1> Upload Form </h1>
 				<p>Mix Name</p>
-				<input type="text" name="mixTitle" placeholder="Enter Mix Name" />
+				<input type="text" name="mixTitle" placeholder="Enter Mix Name" required />
 				<p>Creator Name</p>
-				<input type="text" name="mixMaker" placeholder="Enter Mix Maker" />
+				<input type="text" name="mixMaker" placeholder="Enter Mix Maker" required />
 				<p>Audio Upload</p>
-				<input type="file" name="audioFile" id="audioFile" />
+				<input type="file" name="audioFile" id="audioFile" required />
 				<p>Image Upload</p>
-				<input type="file" name="imageFile" id="imageFile" />
+				<input type="file" name="imageFile" id="imageFile" required />
 				<button type="submit">Upload Mix</button>
 			</form>
 		</div>

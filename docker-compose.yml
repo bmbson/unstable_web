@@ -7,6 +7,9 @@ services:
       - 9999:9999
     volumes:
       - ./backend/app:/app 
+    networks:
+      unstable-network:
+       ipv4_address: 10.1.0.10
 
   db:
     image: postgres:latest
@@ -17,12 +20,18 @@ services:
       POSTGRES_DB: db
     ports:
       - 5432:5432
+    networks:
+      unstable-network:
+        ipv4_address: 10.1.0.20
  
   adminer:
     image: adminer
     restart: always
     ports:
       - 8080:8080
+    networks:
+      unstable-network:
+       ipv4_address: 10.1.0.30
 
   upload-page:
     image: unstable-upload-page
@@ -31,3 +40,14 @@ services:
       - 7777:7777
     volumes:
       - ./upload-page/app:/app
+    networks:
+      unstable-network:
+       ipv4_address: 10.1.0.40
+
+networks:
+  unstable-network:
+    name: unstable-network
+    driver: bridge 
+    ipam:
+      config:
+        - subnet: 10.1.0.0/16

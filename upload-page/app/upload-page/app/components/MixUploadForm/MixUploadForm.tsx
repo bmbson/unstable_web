@@ -3,7 +3,8 @@ import "./style.css"
 
 export default function MixUploadForm() {
 	function uploadMix(formData: FormData) {
-		fetch("http://backend:9999/", { method: "POST" })
+		console.log('attempting get request...');
+		fetch("http://localhost:9999/", { method: "GET" })
 			.then((response) => response.json())
 			.then((json) => console.log(json));
 
@@ -11,8 +12,8 @@ export default function MixUploadForm() {
 		const mixCreator = formData.get("mixCreator");
 		const audioFile = formData.get("audioFile");
 		const imageFile = formData.get("imageFile");
-		alert(`You searched for '${audioFile}'`);
 	};
+
 
 	return (
 		<div>

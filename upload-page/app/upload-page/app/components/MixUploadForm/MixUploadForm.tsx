@@ -3,7 +3,7 @@ import "./style.css"
 
 export default function MixUploadForm() {
 	function uploadMix(formData: FormData) {
-		fetch("http://google.com/")
+		fetch("http://backend:9999/", { method: "POST" })
 			.then((response) => response.json())
 			.then((json) => console.log(json));
 

@@ -9,8 +9,6 @@ WORKDIR /app/upload-page/
 RUN chown -R node:node /app/upload-page
 RUN chown -R node:node /app
 
-RUN npm i @next/swc-linux-x64-gnu
-
 RUN npm install 
 
 CMD ["npm", "run", "dev"]

@@ -1,11 +1,29 @@
 from typing import Annotated
 from fastapi import FastAPI, Depends
 from sqlmodel import Session, Field, SQLModel, create_engine
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 
 postgres_url = "postgresql://changeme:changeme@db:5432/db"
 engine = create_engine(postgres_url, echo=True)
+
+# Voor CORS
+origins = [
+    "https://10.1.0.40",
+    "https://10.1.0.40:3000",
+    "http://localhost",
+    "*",
+]
+
+# Voor CORS
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 # https://fastapi.tiangolo.com/tutorial/sql-databases/?h=sessiondep#create-a-session-dependency
@@ -34,7 +52,7 @@ def on_startup():
     create_db_and_tables()
 
 
-@app.get("/")
+@app.post("/")
 def read_root():
     return {"Hello": "World!"}
 

@@ -3,15 +3,20 @@ import "./style.css"
 
 export default function MixUploadForm() {
 	function uploadMix(formData: FormData) {
-		console.log('attempting get request...');
-		fetch("http://10.1.0.10:9999/", { method: "GET" })
-			.then((response) => response.json())
-			.then((json) => console.log(json));
-
 		const mixTitle = formData.get("mixTitle");
 		const mixCreator = formData.get("mixCreator");
 		const audioFile = formData.get("audioFile");
 		const imageFile = formData.get("imageFile");
+
+		fetch("http://10.1.0.10:9999/", {
+			method: "POST",
+			headers: {
+				"Access-Control-Allow-Origin": "http://10.1.0.10:9999/"
+			},
+			body: JSON.stringify({ username: "example" })
+		})
+			.then((response) => response.json())
+			.then((json) => console.log(json));
 	};
 
 

@@ -4,7 +4,10 @@ WORKDIR /app
 
 COPY ./app /app
 
-WORKDIR /app/upload-page
+WORKDIR /app/upload-page/
+
+RUN chown -R node:node /app/upload-page
+RUN chown -R node:node /app
 
 RUN npm install 
 

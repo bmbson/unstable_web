@@ -38,8 +38,6 @@ services:
     restart: always
     ports:
       - 7777:7777
-    volumes:
-      - ./upload-page/app:/app
     networks:
       unstable-network:
        ipv4_address: 10.1.0.40

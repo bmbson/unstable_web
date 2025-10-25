@@ -11,12 +11,10 @@ export default function MixUploadForm() {
 		fetch("http://10.1.0.10:9999/", {
 			method: "POST",
 			headers: {
-				"Access-Control-Allow-Origin": "http://10.1.0.10:9999/"
+				"Access-Control-Allow-Origin": "http://10.1.0.10:9999/",
 			},
-			body: JSON.stringify({ username: "example" })
+			body: formData
 		})
-			.then((response) => response.json())
-			.then((json) => console.log(json));
 	};
 
 
@@ -27,7 +25,7 @@ export default function MixUploadForm() {
 				<p>Mix Name</p>
 				<input type="text" name="mixTitle" placeholder="Enter Mix Name" required />
 				<p>Creator Name</p>
-				<input type="text" name="mixMaker" placeholder="Enter Mix Maker" required />
+				<input type="text" name="mixCreator" placeholder="Enter Mix Maker" required />
 				<p>Audio Upload</p>
 				<input type="file" name="audioFile" id="audioFile" required />
 				<p>Image Upload</p>

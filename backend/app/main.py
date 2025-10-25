@@ -1,7 +1,8 @@
 from typing import Annotated
-from fastapi import FastAPI, Depends
+from fastapi import FastAPI, Depends, File, UploadFile, Form
 from sqlmodel import Session, Field, SQLModel, create_engine
 from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel
 
 app = FastAPI()
 
@@ -47,14 +48,29 @@ class Mix(SQLModel, table=True):
     mixPictureLocation: str
 
 
+class MixUpload(BaseModel):
+    mixTitle: str
+    mixCreator: str
+
+
 @app.on_event("startup")
 def on_startup():
     create_db_and_tables()
 
 
-@app.post("/")
+@app.get("/")
 def read_root():
     return {"Hello": "World!"}
+
+
+# https://fastapi.tiangolo.com/tutorial/request-forms/#import-form
+@app.post("/")
+def uploadmix(
+    mixTitle: Annotated[str, Form()],
+    mixCreator: Annotated[str, Form()],
+    audioFile: Annotated[str, Form()],
+):
+    return {"mixTitle": mixTitle, "mixCreator": mixCreator, "audioFile": audioFile}
 
 
 @app.post("/addMix")

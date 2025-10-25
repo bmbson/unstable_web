@@ -68,9 +68,15 @@ def read_root():
 def uploadmix(
     mixTitle: Annotated[str, Form()],
     mixCreator: Annotated[str, Form()],
-    audioFile: Annotated[str, Form()],
+    audioFile: Annotated[bytes, File()],
+    imageFile: Annotated[bytes, File()],
 ):
-    return {"mixTitle": mixTitle, "mixCreator": mixCreator, "audioFile": audioFile}
+    return {
+        "mixTitle": mixTitle,
+        "mixCreator": mixCreator,
+        "audioFile": len(audioFile),
+        "imageFile": len(imageFile),
+    }
 
 
 @app.post("/addMix")

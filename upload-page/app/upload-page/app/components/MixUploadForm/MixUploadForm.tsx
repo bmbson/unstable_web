@@ -3,10 +3,6 @@ import "./style.css"
 
 export default function MixUploadForm() {
 	function uploadMix(formData: FormData) {
-		const mixTitle = formData.get("mixTitle");
-		const mixCreator = formData.get("mixCreator");
-		const audioFile = formData.get("audioFile");
-		const imageFile = formData.get("imageFile");
 
 		fetch("http://10.1.0.10:9999/", {
 			method: "POST",

@@ -5,7 +5,9 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from pathlib import Path
 import os
+import psycopg2
 import datetime
+import logging
 import shutil
 
 app = FastAPI()
@@ -38,6 +40,28 @@ def save_upload_file(upload_file: UploadFile, destination: Path) -> None:
             print("upload succesful.")
     finally:
         upload_file.file.close()
+
+
+def save_mix_sql():
+    logging.debug("Pre Try")
+    try:
+        logging.debug("Try 1")
+        connection = psycopg2.connect(
+            dbname="db",
+            user="changeme",
+            password="changeme",
+            host="10.1.0.20",
+            port="5432",
+        )
+        cur = connection.cursor()
+        cur.execute("SELECT version();")
+        response = cur.fetchone()
+        print(response)
+        print("Connection successful")
+        return connection
+    except Exception as e:
+        print(f"Error: {e}")
+        return None
 
 
 # https://fastapi.tiangolo.com/tutorial/sql-databases/?h=sessiondep#create-a-session-dependency
@@ -73,7 +97,7 @@ def on_startup():
 
 @app.get("/")
 def read_root():
-    return {"Hello": "World!"}
+    return {}
 
 
 # https://fastapi.tiangolo.com/tutorial/request-forms/#import-form
@@ -85,6 +109,7 @@ def uploadmix(
     audioFile: UploadFile,
     imageFile: UploadFile,
 ):
+    save_mix_sql()
     if audioFile.content_type.startswith(
         "audio/"
     ) and imageFile.content_type.startswith("image/"):
@@ -105,20 +130,28 @@ def uploadmix(
                 print(f"Directory '{directory_name}' created successfully.")
             except FileExistsError:
                 print(f"Directory '{directory_name}' already exists.")
+                return f"Directory '{directory_name}' already exists."
             except PermissionError:
                 print(f"Permission denied: Unable to create '{directory_name}'.")
+                return f"Permission denied: Unable to create '{directory_name}'."
             except Exception as e:
                 print(f"An error occurred: {e}")
+                return e
 
         try:
-            save_upload_file(audioFile, Path(audioFileFolderName))
-            save_upload_file(imageFile, Path(audioFileFolderName))
+            save_upload_file(
+                audioFile, Path(audioFileFolderName + f"/{audioFile.filename}")
+            )
+            save_upload_file(
+                imageFile, Path(audioFileFolderName + f"/{imageFile.filename}")
+            )
             print("Upload success.")
         except Exception as e:
             print(f"An error occured: {e}")
+            return e
 
         return {
-            "mixTitle": mixTitle,
+            "": mixTitle,
             "mixCreator": mixCreator,
             "audioFile": f"/storage/{mixCreator}/{mixTitle}/{audioFile.filename}",
             "imageFile": f"/storage/{mixCreator}/{mixTitle}/{audioFile.filename}",

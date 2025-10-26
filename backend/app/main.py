@@ -1,8 +1,12 @@
 from typing import Annotated
-from fastapi import FastAPI, Depends, File, UploadFile, Form
+from fastapi import FastAPI, Depends, UploadFile, Form
 from sqlmodel import Session, Field, SQLModel, create_engine
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
+from pathlib import Path
+import os
+import datetime
+import shutil
 
 app = FastAPI()
 
@@ -25,6 +29,15 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+
+def save_upload_file(upload_file: UploadFile, destination: Path) -> None:
+    try:
+        with destination.open("wb") as buffer:
+            shutil.copyfileobj(upload_file.file, buffer)
+            print("upload succesful.")
+    finally:
+        upload_file.file.close()
 
 
 # https://fastapi.tiangolo.com/tutorial/sql-databases/?h=sessiondep#create-a-session-dependency
@@ -64,6 +77,7 @@ def read_root():
 
 
 # https://fastapi.tiangolo.com/tutorial/request-forms/#import-form
+# https://fastapi.tiangolo.com/tutorial/request-files/#file-parameters-with-uploadfile
 @app.post("/")
 def uploadmix(
     mixTitle: Annotated[str, Form()],
@@ -71,14 +85,43 @@ def uploadmix(
     audioFile: UploadFile,
     imageFile: UploadFile,
 ):
-    if audioFile.content_type.startswith("audio/") or imageFile.content_type.startswith(
-        "image/"
-    ):
+    if audioFile.content_type.startswith(
+        "audio/"
+    ) and imageFile.content_type.startswith("image/"):
+        date_object = datetime.datetime.now()
+
+        audioFileFolderName = (
+            f"/storage/{date_object.year}/{date_object.month}/{mixCreator}/{mixTitle}"
+        )
+        imageFileFolderName = (
+            f"/storage/{date_object.year}/{date_object.month}/{mixCreator}/{mixTitle}"
+        )
+
+        directory_array = [audioFileFolderName, imageFileFolderName]
+
+        for directory_name in directory_array:
+            try:
+                os.makedirs(directory_name)
+                print(f"Directory '{directory_name}' created successfully.")
+            except FileExistsError:
+                print(f"Directory '{directory_name}' already exists.")
+            except PermissionError:
+                print(f"Permission denied: Unable to create '{directory_name}'.")
+            except Exception as e:
+                print(f"An error occurred: {e}")
+
+        try:
+            save_upload_file(audioFile, Path(audioFileFolderName))
+            save_upload_file(imageFile, Path(audioFileFolderName))
+            print("Upload success.")
+        except Exception as e:
+            print(f"An error occured: {e}")
+
         return {
             "mixTitle": mixTitle,
             "mixCreator": mixCreator,
-            "audioFile": audioFile.content_type,
-            "imageFile": imageFile.content_type,
+            "audioFile": f"/storage/{mixCreator}/{mixTitle}/{audioFile.filename}",
+            "imageFile": f"/storage/{mixCreator}/{mixTitle}/{audioFile.filename}",
         }
     else:
         return {"Error": "Wrong Format"}

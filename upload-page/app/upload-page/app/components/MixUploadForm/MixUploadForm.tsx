@@ -13,6 +13,8 @@ export default function MixUploadForm() {
 		})
 	};
 
+	function validateData(formData: FormData) {
+	}
 
 	return (
 		<div>
@@ -23,9 +25,9 @@ export default function MixUploadForm() {
 				<p>Creator Name</p>
 				<input type="text" name="mixCreator" placeholder="Enter Mix Maker" required />
 				<p>Audio Upload</p>
-				<input type="file" name="audioFile" id="audioFile" required />
+				<input type="file" name="audioFile" id="audioFile" accept="audio/*" required />
 				<p>Image Upload</p>
-				<input type="file" name="imageFile" id="imageFile" required />
+				<input type="file" name="imageFile" id="imageFile" accept="image/*" required />
 				<button type="submit">Upload Mix</button>
 			</form>
 		</div>

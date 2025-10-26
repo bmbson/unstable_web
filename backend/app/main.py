@@ -68,15 +68,20 @@ def read_root():
 def uploadmix(
     mixTitle: Annotated[str, Form()],
     mixCreator: Annotated[str, Form()],
-    audioFile: Annotated[bytes, File()],
-    imageFile: Annotated[bytes, File()],
+    audioFile: UploadFile,
+    imageFile: UploadFile,
 ):
-    return {
-        "mixTitle": mixTitle,
-        "mixCreator": mixCreator,
-        "audioFile": len(audioFile),
-        "imageFile": len(imageFile),
-    }
+    if audioFile.content_type.startswith("audio/") or imageFile.content_type.startswith(
+        "image/"
+    ):
+        return {
+            "mixTitle": mixTitle,
+            "mixCreator": mixCreator,
+            "audioFile": audioFile.content_type,
+            "imageFile": imageFile.content_type,
+        }
+    else:
+        return {"Error": "Wrong Format"}
 
 
 @app.post("/addMix")

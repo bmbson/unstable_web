@@ -1,4 +1,18 @@
 services:
+  frontend:
+    depends_on:
+      - db
+      - backend
+    image: unstable-frontend
+    restart: always
+    ports:
+      - 3000:3000
+    volumes:
+      - ./frontend/app:/app 
+    networks:
+      unstable-network:
+       ipv4_address: 10.1.0.50
+
   backend:
     depends_on:
       - db  

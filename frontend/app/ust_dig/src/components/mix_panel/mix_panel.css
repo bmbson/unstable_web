@@ -1,0 +1,13 @@
+#mixPanel {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 75px;
+    margin-top: 50px;
+    justify-content: center;
+    gap: 20px;
+}
+
+.visuals {
+    height: 100vh;
+    overflow-y: hidden;
+}

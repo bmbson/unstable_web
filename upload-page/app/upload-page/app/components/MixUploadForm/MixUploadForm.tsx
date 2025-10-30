@@ -19,7 +19,7 @@ export default function MixUploadForm() {
 	return (
 		<div>
 			<form id="MixUploadForm" action={uploadMix}>
-				<h1> Upload Form </h1>
+				<h1> Upload </h1>
 				<p>Mix Name</p>
 				<input type="text" name="mixTitle" placeholder="Enter Mix Name" required />
 				<p>Creator Name</p>

@@ -7,7 +7,6 @@ from pathlib import Path
 import os
 import psycopg2
 import datetime
-import logging
 import shutil
 
 app = FastAPI()
@@ -42,10 +41,13 @@ def save_upload_file(upload_file: UploadFile, destination: Path) -> None:
         upload_file.file.close()
 
 
-def save_mix_sql():
-    logging.debug("Pre Try")
+def save_mix_sql(
+    mix_title: str,
+    mix_creator: str,
+    mix_audio_location: str,
+    mix_picture_location: str,
+) -> None:
     try:
-        logging.debug("Try 1")
         connection = psycopg2.connect(
             dbname="db",
             user="changeme",
@@ -53,15 +55,25 @@ def save_mix_sql():
             host="10.1.0.20",
             port="5432",
         )
+
         cur = connection.cursor()
-        cur.execute("SELECT version();")
-        response = cur.fetchone()
-        print(response)
-        print("Connection successful")
-        return connection
+        cur.execute(
+            """
+            INSERT INTO mix (mix_title, mix_creator, mix_audio_location, mix_picture_location)
+            VALUES (%s, %s, %s, %s)
+             RETURNING id;
+        """,
+            (
+                mix_title,
+                mix_creator,
+                mix_audio_location,
+                mix_picture_location,
+            ),
+        )
+        connection.commit()
+        print("Info: SQL Row Inserted")
     except Exception as e:
         print(f"Error: {e}")
-        return None
 
 
 # https://fastapi.tiangolo.com/tutorial/sql-databases/?h=sessiondep#create-a-session-dependency
@@ -109,42 +121,38 @@ def uploadmix(
     audioFile: UploadFile,
     imageFile: UploadFile,
 ):
-    save_mix_sql()
     if audioFile.content_type.startswith(
         "audio/"
     ) and imageFile.content_type.startswith("image/"):
         date_object = datetime.datetime.now()
 
-        audioFileFolderName = (
-            f"/storage/{date_object.year}/{date_object.month}/{mixCreator}/{mixTitle}"
-        )
-        imageFileFolderName = (
+        mix_folder = (
             f"/storage/{date_object.year}/{date_object.month}/{mixCreator}/{mixTitle}"
         )
 
-        directory_array = [audioFileFolderName, imageFileFolderName]
-
-        for directory_name in directory_array:
-            try:
-                os.makedirs(directory_name)
-                print(f"Directory '{directory_name}' created successfully.")
-            except FileExistsError:
-                print(f"Directory '{directory_name}' already exists.")
-                return f"Directory '{directory_name}' already exists."
-            except PermissionError:
-                print(f"Permission denied: Unable to create '{directory_name}'.")
-                return f"Permission denied: Unable to create '{directory_name}'."
-            except Exception as e:
-                print(f"An error occurred: {e}")
-                return e
+        save_mix_sql(
+            mixTitle,
+            mixCreator,
+            mix_folder + f"/{audioFile.filename}",
+            mix_folder + f"/{audioFile.filename}",
+        )
 
         try:
-            save_upload_file(
-                audioFile, Path(audioFileFolderName + f"/{audioFile.filename}")
-            )
-            save_upload_file(
-                imageFile, Path(audioFileFolderName + f"/{imageFile.filename}")
-            )
+            os.makedirs(mix_folder)
+            print(f"Directory '{mix_folder}' created successfully.")
+        except FileExistsError:
+            print(f"Directory '{mix_folder}' already exists.")
+            return f"Directory '{mix_folder}' already exists."
+        except PermissionError:
+            print(f"Permission denied: Unable to create '{mix_folder}'.")
+            return f"Permission denied: Unable to create '{mix_folder}'."
+        except Exception as e:
+            print(f"An error occurred: {e}")
+            return e
+
+        try:
+            save_upload_file(audioFile, Path(mix_folder + f"/{audioFile.filename}"))
+            save_upload_file(imageFile, Path(mix_folder + f"/{imageFile.filename}"))
             print("Upload success.")
         except Exception as e:
             print(f"An error occured: {e}")

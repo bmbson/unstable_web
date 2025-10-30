@@ -1,0 +1,13 @@
+#volume-controls {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+@media screen and (max-width: 800px) {
+    #volume-controls {
+        display: none;
+    }
+}

@@ -1,0 +1,47 @@
+#seekerBar {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+#seekerBarSlider {
+    width: 800px;
+    min-width: 200px;
+    margin-left: 2px;
+    margin-right: 2px;
+}
+
+#currentAudioTime, #totalAudioDuration {
+    font-size: smaller;
+    width: 30px;
+}
+
+@media screen and (max-width: 1300px) {
+    #seekerBarSlider {
+        width: 500px;
+    }
+}
+
+@media screen and (max-width: 1000px) {
+    #seekerBarSlider {
+        width: 350px;
+    }
+}
+
+@media screen and (max-width: 1000px) {
+    #seekerBarSlider {
+        width: 350px;
+    }
+}
+
+@media screen and (max-width: 700px) {
+    #seekerBarSlider {
+        width: 250px;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    #seekerBar {
+        display: none;
+    }
+}

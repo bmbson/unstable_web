@@ -1,0 +1,42 @@
+.searchBarsWrapper {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+main {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-left: 100px;
+    margin-right: 100px;
+}
+
+.visuals {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.searchBarsWrapper {
+    margin-top: 45px;
+    margin-bottom: 45px;
+}
+
+.mixPanelWrapper {
+    margin-right: 200px;
+    margin-left: 200px;
+}
+
+#leftSide {
+    width: 100%;
+}
+
+@media screen and (max-width: 850px) {
+    .rightSide {
+        display: none;
+    }
+
+    .mixPanelWrapper {
+        margin-right: 0px;
+    }
+}

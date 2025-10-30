@@ -1,0 +1,24 @@
+inbox:
+    - [x] Backend Audio Bugs
+        - [x] fix overlapping audio issue when another mixcard is clicked.
+        - [x] fix dat audio niet direct afspeelt nadat je andere mixcard play button klikt.
+        - [x] fix dat pause button niet werkt na klikken van runnende mix item.
+
+    - [ ] Rework audioContextHelperStore()
+        Zorg ervoor dat het ook trackt welke audio er afspeelt. Hieruit kan dan beslist worden welke iconen er geshowt worden op de mixcard en bottombar.
+
+    - [ ] Mixcard Bugs
+        - [ ] When a user plays audio via the mixcard and clicks another mixcard the audio should stop playing.
+        - [ ] When a user plays audio via the mixcard and clicks another mixcard the new mixcard should play without clicking twice.
+
+    - [] Bottom Audio Bar   
+        - [ ] add image of currently playing song on bottomBar. // Doe dit wanneer je begint aan de backend gedeelte van de app.
+        - [ ] when the user slides the bottom bar to the lowest volume, it s`hould show the crossed out volume button.
+        - [ ] when the user plays a track and pauses it again, the button should be a pause button.
+
+        
+    - [ ] Fix audio controls.
+outbox:
+    - [X] fix audiio mixes page play pause button logic.
+    - [X] test voor bugs audiobackend.
+        - [X] When User plays music, only the mixcard that is playing should get a pause button icon. 

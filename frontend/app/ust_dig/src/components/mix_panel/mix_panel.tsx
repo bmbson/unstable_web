@@ -1,7 +1,8 @@
-import React from "react";
+//import React, { useEffect, useState } from "react";
 import MixCard from "../mix_card/mix_card";
 import './mix_panel.css'
-import { fetchTest } from "@/app/ts/mix_panel/data";
+import { fetchTest, MixTyping } from "@/app/ts/mix_panel/data";
+import postgres, { RowList } from "postgres";
 
 const mix1 = {
 	mixUrl: './tm404.mp3',
@@ -39,9 +40,19 @@ const mix4 = {
 	genres: ['dub'],
 }
 
+
 async function MixPanel() {
-	var testVar = await fetchTest();
-	console.log(testVar)
+	var data = await fetchTest();
+
+	// const [data, setData] = useState<RowList<MixTyping[]>>();
+
+	//	useEffect(() => {
+	//		async () => {
+	//			const result = await fetchTest()
+	//			setData(result);
+	//		};
+	//	}, [])
+
 
 	return (
 		<div id="mixPanel">
@@ -54,7 +65,11 @@ async function MixPanel() {
 			<MixCard mixUrl={mix3.mixUrl} mixName={mix3.mixName} artist={mix3.mixCreator} imageSrc={mix3.mixImage} date={mix3.mixDate}></MixCard>
 			<MixCard mixUrl={mix4.mixUrl} mixName={mix4.mixName} artist={mix4.mixCreator} imageSrc={mix4.mixImage} date={mix4.mixDate}></MixCard>
 
-			<MixCard mixUrl={testVar.toString()} mixName={testVar[0].genres} artist={testVar[0].mix_creator} imageSrc={mix4.mixImage} date={testVar.toString()}></MixCard>
+			<ul id="mixCardList">
+				{data.map((item) => (
+					<li key={item.id}><MixCard mixUrl={mix1.mixUrl} mixName={item.mix_title} artist={item.mix_creator} imageSrc={mix1.mixImage} date={item.mix_picture_location}></MixCard></li>
+				))}
+			</ul>
 		</div >
 	)
 };

@@ -24,7 +24,6 @@ export const useAudioContextHelperStore = create<audioContextHelperStore>((set) 
 
 	setCurrentTrackInfo: (trackInfoArray: any) => {
 		set({ currentTrackInfo: trackInfoArray })
-		console.log(trackInfoArray);
 	},
 	setCurrentPlayingTrack: () => {
 		set({ currentPlayingTrack: ctx.audioElement?.src });

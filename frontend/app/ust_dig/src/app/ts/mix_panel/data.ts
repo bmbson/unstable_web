@@ -10,6 +10,7 @@ const sql = postgres({
 })
 
 export type MixTyping = {
+	id: number;
 	mix_audio_location: string;
 	mix_title: string;
 	mix_picture_location: string;

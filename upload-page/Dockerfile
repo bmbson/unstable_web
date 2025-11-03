@@ -1,12 +1,13 @@
 FROM node:latest
 
-COPY ./app /app
+COPY ./src /src
 
-RUN chown -R node:node /app
+#RUN chown -R node:node /app
 
-WORKDIR /app/upload-page
+WORKDIR /src
 
 RUN npm install -g
+RUN npm install
 
 #CMD ["tail", "-f", "/dev/null"]
 CMD ["npm", "run", "dev"]

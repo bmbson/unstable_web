@@ -8,6 +8,16 @@ main {
 .frontPageWrapper {
 	width: 100%;
 	height: 100%;
+	display: flex;
+	flex-direction: column-reverse;
+	align-items: center;
+}
+
+.CarouselWrapper {
+	position: absolute;
+	z-index: 9;
+	/* fix dit later */
+	margin-bottom: 70px;
 }
 
 .ImageWrapper {

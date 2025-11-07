@@ -29,6 +29,7 @@ const items: slideDisplayImageItem[] = [
 
 function SlideDisplay({ src, alt, index }: { src: string; alt: string; index: any }) {
 
+
 	return (
 		<div className="slideDisplayWrapper">
 			<div className="slideDisplayControl" id="slideDisplayControl-L" onClick={() => { }} ></div>

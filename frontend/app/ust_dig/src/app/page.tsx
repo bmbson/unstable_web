@@ -37,6 +37,7 @@ export default function Home() {
 		};
 	},); // optional dependency array
 
+	console.log(index)
 
 	return (
 		<main>
@@ -45,7 +46,7 @@ export default function Home() {
 					<SlideDisplay src={string} alt="test" index={index}></SlideDisplay>
 				</div>
 				<div className='CarouselWrapper'>
-					<CarouselIndicator index={3} ></CarouselIndicator>
+					<CarouselIndicator elementAmount={index} currentIndex={undefined} ></CarouselIndicator>
 				</div>
 			</div>
 		</main >

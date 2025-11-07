@@ -9,10 +9,11 @@ import { useEffect, useState } from 'react';
 const string = '/images/frontpage_images/sea.jpg'
 
 export default function Home() {
-	const [index, setIndex] = useState<number>(1);
+	const [index, setIndex] = useState<number>(2);
 
 	function nextItem() {
-		if (index - 1 >= index + 1) {
+		console.log(index)
+		if (index < 2) {
 			setIndex(index + 1);
 		} else {
 			setIndex(0);
@@ -20,8 +21,9 @@ export default function Home() {
 	}
 
 	function prevItem() {
+		console.log(index)
 		if (index <= 0) {
-			setIndex(index - 1);
+			setIndex(2);
 		} else {
 			setIndex(index - 1);
 		}
@@ -43,10 +45,10 @@ export default function Home() {
 		<main>
 			<div className="frontPageWrapper">
 				<div className="ImageWrapper">
-					<SlideDisplay src={string} alt="test" index={index}></SlideDisplay>
+					<SlideDisplay controlL={() => prevItem()} controlR={() => nextItem()} src={string} alt="test" index={index}></SlideDisplay>
 				</div>
 				<div className='CarouselWrapper'>
-					<CarouselIndicator elementAmount={6} currentIndex={undefined} ></CarouselIndicator>
+					<CarouselIndicator elementAmount={3} currentIndex={index} ></CarouselIndicator>
 				</div>
 			</div>
 		</main >

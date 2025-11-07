@@ -7,12 +7,14 @@ function CarouselIndicator({ elementAmount, currentIndex }: { elementAmount: any
 
 		for (let i = 0; i < elementAmount; i++) {
 			elements.push(
-				<div key={i} className="dot"></div>
+				<div key={i} className="dot" style={{
+					backgroundColor: currentIndex == i ? "white" : "grey",
+					// Add more styles as needed
+				}}></div>
 			);
 		}
 		return elements;
 	}
-
 
 	return (
 		<div>

@@ -27,16 +27,17 @@ const items: slideDisplayImageItem[] = [
 	},
 ];
 
-function SlideDisplay({ src, alt, index }: { src: string; alt: string; index: any }) {
+function SlideDisplay({ src, alt, index, controlL, controlR }: { src: string; alt: string; index: any, controlL: any, controlR: any }) {
 
+	console.log(index)
 
 	return (
 		<div className="slideDisplayWrapper">
-			<div className="slideDisplayControl" id="slideDisplayControl-L" onClick={() => { }} ></div>
+			<div className="slideDisplayControl" id="slideDisplayControl-L" onClick={controlL} ></div>
 			<Link id="linkWrapper" href={items[index].url}>
 				<Image className="image" fill={true} src={items[index].imageUrl} alt={items[index].title} ></Image>
 			</Link>
-			<div className="slideDisplayControl" id="slideDisplayControl-R" onClick={() => { }} ></div>
+			<div className="slideDisplayControl" id="slideDisplayControl-R" onClick={controlR} ></div>
 		</div >
 	)
 }

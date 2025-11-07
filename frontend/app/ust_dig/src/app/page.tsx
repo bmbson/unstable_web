@@ -46,7 +46,7 @@ export default function Home() {
 					<SlideDisplay src={string} alt="test" index={index}></SlideDisplay>
 				</div>
 				<div className='CarouselWrapper'>
-					<CarouselIndicator elementAmount={index} currentIndex={undefined} ></CarouselIndicator>
+					<CarouselIndicator elementAmount={6} currentIndex={undefined} ></CarouselIndicator>
 				</div>
 			</div>
 		</main >

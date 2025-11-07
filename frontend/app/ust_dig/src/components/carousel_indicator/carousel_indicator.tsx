@@ -2,12 +2,12 @@ import React from "react";
 import './carousel_indicator.css';
 
 function CarouselIndicator({ elementAmount, currentIndex }: { elementAmount: any, currentIndex: any }) {
-	console.log(elementAmount)
 	function createElements() {
 		let elements = [];
+
 		for (let i = 0; i < elementAmount; i++) {
 			elements.push(
-				<div key={elementAmount} className="dot">x</div>
+				<div key={i} className="dot"></div>
 			);
 		}
 		return elements;

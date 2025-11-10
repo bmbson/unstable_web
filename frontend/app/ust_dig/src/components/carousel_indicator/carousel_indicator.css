@@ -1,6 +1,6 @@
 #carouselIndicator {
 	min-width: 100px;
-	height: 50px;
+	height: 40px;
 	background-color: rgba(41, 41, 41, 0.25);
 	border-radius: 20px;
 	display: flex;
@@ -18,4 +18,9 @@
 	width: 10px;
 	height: 10px;
 	border-radius: 50%;
+}
+
+.button {
+	cursor: pointer;
+	color: whitesmoke;
 }

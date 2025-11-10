@@ -10,9 +10,9 @@ const string = '/images/frontpage_images/sea.jpg'
 
 export default function Home() {
 	const [index, setIndex] = useState<number>(2);
+	const [autoPlay, setAutoPlay] = useState<boolean>(true);
 
 	function nextItem() {
-		console.log(index)
 		if (index < 2) {
 			setIndex(index + 1);
 		} else {
@@ -21,7 +21,6 @@ export default function Home() {
 	}
 
 	function prevItem() {
-		console.log(index)
 		if (index <= 0) {
 			setIndex(2);
 		} else {
@@ -29,17 +28,23 @@ export default function Home() {
 		}
 	}
 
+	function toggleAutoPlay() {
+		setAutoPlay(!autoPlay)
+	}
+
 	useEffect(() => {
-		const scroll = setInterval(() => {
-			nextItem();
-		}, 5000);
+		if (autoPlay == true) {
+			const scroll = setInterval(() => {
+				nextItem();
+			}, 5000);
 
-		return () => {
-			clearInterval(scroll);
-		};
+			return () => {
+				clearInterval(scroll);
+			};
+		} else {
+
+		}
 	},); // optional dependency array
-
-	console.log(index)
 
 	return (
 		<main>
@@ -48,7 +53,7 @@ export default function Home() {
 					<SlideDisplay controlL={() => prevItem()} controlR={() => nextItem()} src={string} alt="test" index={index}></SlideDisplay>
 				</div>
 				<div className='CarouselWrapper'>
-					<CarouselIndicator elementAmount={3} currentIndex={index} ></CarouselIndicator>
+					<CarouselIndicator elementAmount={3} currentIndex={index} pauseButton={() => toggleAutoPlay()} status={autoPlay} ></CarouselIndicator>
 				</div>
 			</div>
 		</main >

@@ -9,6 +9,7 @@ import SeekerBar from "./seeker_bar/SeekerBar";
 import AudioInfo from "./audio_info/AudioInfo";
 import { useAudioContextHelperStore } from "@/store";
 import { MdSkipNext, MdSkipPrevious } from "react-icons/md";
+import { useUIHelperStore } from "@/uiStore";
 
 
 function BottomAudioControlBar() {
@@ -18,11 +19,15 @@ function BottomAudioControlBar() {
 	const currentTrackInfo = useAudioContextHelperStore((state) => state.currentTrackInfo);
 	const [bottomBarToggle, setBottomBarToggle] = useState(false);
 
+
+	const { isBottomBarActive, setIsBottomBarActive } = useUIHelperStore()
+
 	useEffect(() => {
 		if (isAudioPlaying == true) {
 			setBottomBarToggle(true);
+			setIsBottomBarActive();
 		}
-	}, [isAudioPlaying]);
+	}, [isAudioPlaying, setIsBottomBarActive]);
 
 
 	return (

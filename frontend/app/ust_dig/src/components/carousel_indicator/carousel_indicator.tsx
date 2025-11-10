@@ -1,7 +1,14 @@
 import React from "react";
 import './carousel_indicator.css';
+import { FaRegCirclePause, FaRegCirclePlay } from "react-icons/fa6";
+import { useUIHelperStore } from "@/uiStore";
 
-function CarouselIndicator({ elementAmount, currentIndex }: { elementAmount: any, currentIndex: any }) {
+function CarouselIndicator({ elementAmount, currentIndex, pauseButton, status }: { elementAmount: any, currentIndex: any, pauseButton: any, status: boolean }) {
+
+	const { isBottomBarActive, setIsBottomBarActive } = useUIHelperStore();
+	console.log(isBottomBarActive)
+
+
 	function createElements() {
 		let elements = [];
 
@@ -9,7 +16,6 @@ function CarouselIndicator({ elementAmount, currentIndex }: { elementAmount: any
 			elements.push(
 				<div key={i} className="dot" style={{
 					backgroundColor: currentIndex == i ? "white" : "grey",
-					// Add more styles as needed
 				}}></div>
 			);
 		}
@@ -18,13 +24,19 @@ function CarouselIndicator({ elementAmount, currentIndex }: { elementAmount: any
 
 	return (
 		<div>
-			<div id="carouselIndicator">
+			<div id="carouselIndicator"
+				style={{
+					bottom: !isBottomBarActive ? "" : "0px",
+					transition: "bottom 0.3s ease",
+				}}
+			>
+				{status == true ? <FaRegCirclePause className="button" onClick={pauseButton} ></FaRegCirclePause>
+					: <FaRegCirclePlay className="button" onClick={pauseButton} ></FaRegCirclePlay>}
 				{
 					createElements()
 				}
-
 			</div>
-		</div>
+		</div >
 	);
 };
 

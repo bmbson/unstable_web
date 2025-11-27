@@ -30,6 +30,12 @@ class audioContextHelper {
 		return this.audioCtx;
 	};
 
+	getCTXInfo() {
+		console.log(this.audioCtx)
+		console.log(this.audioSourceNode)
+		console.log(this.audioElement)
+	}
+
 	resumeAudioContext() {
 		if (this.audioCtx != undefined) {
 			if (this.audioCtx.state === "suspended") {
@@ -78,7 +84,7 @@ class audioContextHelper {
 	};
 
 	pauseAudioElement() {
-		//this.isAudioPlaying = false;
+		// this.isAudioPlaying = false;
 		this.audioElement?.pause();
 	};
 

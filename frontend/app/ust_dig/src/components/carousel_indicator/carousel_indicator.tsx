@@ -6,8 +6,6 @@ import { useUIHelperStore } from "@/uiStore";
 function CarouselIndicator({ elementAmount, currentIndex, pauseButton, status }: { elementAmount: any, currentIndex: any, pauseButton: any, status: boolean }) {
 
 	const { isBottomBarActive, setIsBottomBarActive } = useUIHelperStore();
-	console.log(isBottomBarActive)
-
 
 	function createElements() {
 		let elements = [];

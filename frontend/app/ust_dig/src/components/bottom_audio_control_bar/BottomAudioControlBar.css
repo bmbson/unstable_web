@@ -6,6 +6,7 @@
 	align-items: center;
 
 	background-color: #181818;
+	opacity: 0.9;
 
 	/* Keep the Audio Controller at the bottom of the page. */
 	position: fixed;

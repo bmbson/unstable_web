@@ -10,6 +10,7 @@ import AudioInfo from "./audio_info/AudioInfo";
 import { useAudioContextHelperStore } from "@/store";
 import { MdSkipNext, MdSkipPrevious } from "react-icons/md";
 import { useUIHelperStore } from "@/uiStore";
+import { ctx } from "@/app/audioContextBackendClass";
 
 
 function BottomAudioControlBar() {
@@ -36,7 +37,7 @@ function BottomAudioControlBar() {
 				<div id="BottomAudioControlBar">
 					<div id="controlsWrapper">
 						<div className="playControlsWrapper">
-							<MdSkipPrevious onClick={() => alert('unimplemented.')} />
+							<MdSkipPrevious onClick={() => ctx.getCTXInfo()} />
 							<PlayPauseButton></PlayPauseButton>
 							<MdSkipNext onClick={() => alert('unimplemented.')}></MdSkipNext>
 						</div>

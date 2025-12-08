@@ -1,3 +1,5 @@
+'use client'
+
 import { MdPause, MdPlayArrow } from "react-icons/md";
 import { ctx } from "@/app/audioContextBackendClass";
 import { useAudioContextHelperStore } from "@/store";

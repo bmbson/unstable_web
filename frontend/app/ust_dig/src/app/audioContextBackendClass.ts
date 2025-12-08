@@ -84,7 +84,6 @@ class audioContextHelper {
 	};
 
 	pauseAudioElement() {
-		// this.isAudioPlaying = false;
 		this.audioElement?.pause();
 	};
 

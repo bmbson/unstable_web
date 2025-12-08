@@ -8,6 +8,7 @@ import { MdOutlinePlayCircleOutline, MdOutlinePauseCircleOutline } from "react-i
 import { ctx } from '@/app/audioContextBackendClass';
 import { useAudioContextHelperStore } from '@/store';
 import { extractAfterLastSlashUrl } from '@/app/ts/urlManipulationHelpers';
+import useSWR from 'swr';
 
 interface Props {
 	'mixName': string;
@@ -76,6 +77,7 @@ function MixCard({ mixName, artist, mixUrl, date, width, height, imageSrc = null
 		<>
 			<div className="mixCard" onMouseOver={showInfoOnMouseOver} onMouseLeave={hideInfoOnMouseLeave} >
 				<audio ref={mixCardAudioRef} src={mixUrl} />
+
 				{/* Deze button moet een clickable image worden.*/}
 				<div className="imageWrapper" style={{ position: 'relative' }}>
 					<Image id='image' fill={true} src={imageSrc!} alt={'Image'}>
@@ -97,8 +99,10 @@ function MixCard({ mixName, artist, mixUrl, date, width, height, imageSrc = null
 							setCurrentTrackInfo([mixName, artist, imageSrc]);
 						} else if (extractAfterLastSlashUrl(currentPlayingTrack) != extractAfterLastSlashUrl(mixUrl)) {  // if mixcard and current auudioCTX aren't the same.
 							ctx.pauseAudioElement();
+							updateIsAudioPlaying();
 						} else {
 							ctx.pauseAudioElement();
+							updateIsAudioPlaying();
 						}
 					}}>
 						<div id="playPauseImage">

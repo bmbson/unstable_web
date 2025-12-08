@@ -1,7 +1,9 @@
-//import React, { useEffect, useState } from "react";
+'use client'
+
+import useSWR from "swr"
 import MixCard from "../mix_card/mix_card";
 import './mix_panel.css'
-import { fetchTest, MixTyping } from "@/app/ts/mix_panel/data";
+import { fetchTest, MixTyping, sql } from "@/app/ts/mix_panel/data";
 import postgres, { RowList } from "postgres";
 
 const mix1 = {
@@ -41,18 +43,10 @@ const mix4 = {
 }
 
 
-async function MixPanel() {
-	var data = await fetchTest();
-
-	// const [data, setData] = useState<RowList<MixTyping[]>>();
-
-	//	useEffect(() => {
-	//		async () => {
-	//			const result = await fetchTest()
-	//			setData(result);
-	//		};
-	//	}, [])
-
+function MixPanel() {
+	// var data = await fetchTest();
+	const fetcher = (url: any) => fetch(url).then((res) => res.json())
+	const { data, error } = useSWR('/api/mixes', fetcher)
 
 	return (
 		<div id="mixPanel">

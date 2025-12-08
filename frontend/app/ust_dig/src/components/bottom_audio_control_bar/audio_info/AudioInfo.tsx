@@ -1,3 +1,5 @@
+'use client'
+
 import './AudioInfo.css'
 import Image from 'next/image'
 

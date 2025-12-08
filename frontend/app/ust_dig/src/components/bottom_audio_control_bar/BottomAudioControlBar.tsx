@@ -18,9 +18,8 @@ function BottomAudioControlBar() {
 	const currentTime = useAudioContextHelperStore((state => state.currentTime));
 	const isAudioPlaying = useAudioContextHelperStore((state) => state.isAudioPlaying);
 	const currentTrackInfo = useAudioContextHelperStore((state) => state.currentTrackInfo);
+	const currentPlayingTrack = useAudioContextHelperStore((state) => state.currentPlayingTrack);
 	const [bottomBarToggle, setBottomBarToggle] = useState(false);
-
-
 	const { isBottomBarActive, setIsBottomBarActive } = useUIHelperStore()
 
 	useEffect(() => {
@@ -28,8 +27,10 @@ function BottomAudioControlBar() {
 			setBottomBarToggle(true);
 			setIsBottomBarActive();
 		}
-	}, [isAudioPlaying, setIsBottomBarActive]);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [isAudioPlaying]);
 
+	console.log(ctx.audioElement)
 
 	return (
 		<div>

@@ -16,16 +16,24 @@ class audioContextHelper {
 		this.isAudioPlaying = false;
 	}
 
-	/*Need to figure a way to add audioNode to context*/
-	createAudioContext() {
+	initAudioContext() {
 		if (this.audioCtx != undefined) {
 			console.log('audioCTX already created.');
 		} else {
 			this.audioCtx = new AudioContext;
-			this.gainNode = this.audioCtx.createGain();
+			console.log('audioCTX initialized.');
+		}
+	}
+
+	/*Need to figure a way to add audioNode to context*/
+	createAudioContext() {
+		if (this.audioCtx == undefined) {
+			console.log('Error: AudioContext not initialized!');
+		} else {
+			this.gainNode = this.audioCtx!.createGain();
 			this.createMediaElementSource();
 			this.connectAudioElements();
-			console.log('audioCTX initialized.');
+			console.log('Elements Connected');
 		}
 		return this.audioCtx;
 	};
@@ -66,10 +74,14 @@ class audioContextHelper {
 	};
 
 	createMediaElementSource() {
-		try {
-			this.audioSourceNode = this.audioCtx?.createMediaElementSource(this.audioElement!);
-		} catch (error) {
-			console.log(error);
+		if (this.audioElement == null) {
+			console.log("audioElement is null")
+		} else {
+			try {
+				this.audioSourceNode = this.audioCtx?.createMediaElementSource(this.audioElement!);
+			} catch (error) {
+				console.log(error);
+			};
 		};
 	};
 

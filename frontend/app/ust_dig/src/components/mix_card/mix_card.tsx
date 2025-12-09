@@ -26,12 +26,12 @@ function MixCard({ mixName, artist, mixUrl, date, width, height, imageSrc = null
 	const mixCardAudioRef = useRef<HTMLMediaElement>(null);
 	const [playPauseState, setPlayPauseState] = useState(true);
 
-	const setCurrentPlayingTrack = useAudioContextHelperStore((state) => state.setCurrentPlayingTrack);
+	const setCurrentElement = useAudioContextHelperStore((state) => state.setCurrentElement);
 	const setAudioLength = useAudioContextHelperStore((state) => state.setAudioLength);
 	const setCurrentTime = useAudioContextHelperStore((state) => state.setCurrentTime);
 	const setCurrentTrackInfo = useAudioContextHelperStore((state) => state.setCurrentTrackInfo)
+	const setIsAudioPlaying = useAudioContextHelperStore((state => state.setIsAudioPlaying));
 
-	const updateIsAudioPlaying = useAudioContextHelperStore((state => state.updateIsAudioPlaying));
 	const isAudioPlaying = useAudioContextHelperStore((state => state.isAudioPlaying));
 	const currentPlayingTrack = useAudioContextHelperStore((state => state.currentPlayingTrack))
 
@@ -42,22 +42,17 @@ function MixCard({ mixName, artist, mixUrl, date, width, height, imageSrc = null
 	function showInfoOnMouseOver() {
 		bottomInfoRef.current!.style.visibility = 'visible';
 		mixCardRef.current!.style.visibility = 'visible';
-	}
+	};
 
 	function hideInfoOnMouseLeave() {
 		bottomInfoRef.current!.style.visibility = 'hidden';
 		mixCardRef.current!.style.visibility = 'hidden';
-	}
+	};
 
 	function setCTXAudioElement() {
-		if (ctx.audioCtx != undefined && isAudioPlaying == true) {
-			ctx.pauseAudioElement();
-			ctx.closeAudioContext(ctx.audioCtx);
-			updateIsAudioPlaying(false);
-		};
-
-		ctx.setAudioElement(mixCardAudioRef.current!);
-		setCurrentPlayingTrack(mixCardAudioRef.current!);
+		// ctx.setAudioElement(mixCardAudioRef.current!);
+		setCurrentElement(mixCardAudioRef.current!);
+		setCurrentTrackInfo([mixName, artist, imageSrc])
 	};
 
 	function updateSeekerBarSliderTimer() {
@@ -75,58 +70,49 @@ function MixCard({ mixName, artist, mixUrl, date, width, height, imageSrc = null
 
 	return (
 		<>
-			<div className="mixCard" onMouseOver={showInfoOnMouseOver} onMouseLeave={hideInfoOnMouseLeave} >
-				<audio ref={mixCardAudioRef} src={mixUrl} />
+		<div className="mixCard" onMouseOver={showInfoOnMouseOver} onMouseLeave={hideInfoOnMouseLeave} >
+			<audio ref={mixCardAudioRef} src={mixUrl} />
 
 				{/* Deze button moet een clickable image worden.*/}
-				<div className="imageWrapper" style={{ position: 'relative' }}>
-					<Image id='image' fill={true} src={imageSrc!} alt={'Image'}>
-					</Image>
-					<div className='mixCardPlayPauseButton' ref={mixCardRef} onClick={() => {
+			<div className="imageWrapper" style={{ position: 'relative' }}>
+				<Image id='image' fill={true} src={imageSrc!} alt={'Image'}>
+				</Image>
+				<div className='mixCardPlayPauseButton' ref={mixCardRef} onClick={() => {
+					if (isAudioPlaying == true) {
+						setIsAudioPlaying(false)
+						ctx.pauseAudioElement()
+					} else if (isAudioPlaying == false) {
 						setCTXAudioElement();
-						{/* code duplication with playPauseButton.*/ }
-						if (ctx.audioCtx != undefined) {
-							setCurrentPlayingTrack(mixCardAudioRef.current!);
-							ctx.setAudioElement(mixCardAudioRef.current!);
-						};
-						if (isAudioPlaying == false) {
-							ctx.createAudioContext();
-							ctx.resumeAudioContext();
-							updateSeekerBarSliderTimer();
-							setAudioLength();
-							ctx.playAudioElement();
-							updateIsAudioPlaying(true);
-							setCurrentTrackInfo([mixName, artist, imageSrc]);
-						} else if (extractAfterLastSlashUrl(currentPlayingTrack) != extractAfterLastSlashUrl(mixUrl)) {  // if mixcard and current auudioCTX aren't the same.
-							ctx.pauseAudioElement();
-							updateIsAudioPlaying();
-						} else {
-							ctx.pauseAudioElement();
-							updateIsAudioPlaying();
-						}
-					}}>
-						<div id="playPauseImage">
-							{isAudioPlaying && extractAfterLastSlashUrl(mixUrl) == extractAfterLastSlashUrl(ctx.audioSourceNode?.mediaElement.src) ? <MdOutlinePauseCircleOutline size={150}></MdOutlinePauseCircleOutline> : <MdOutlinePlayCircleOutline size={150}></MdOutlinePlayCircleOutline>}
-						</div>
+						setIsAudioPlaying(true)
+						ctx.playAudioElement()
+					}
+				}}>
+					<div id="playPauseImage">
+						{isAudioPlaying && extractAfterLastSlashUrl(mixUrl) == extractAfterLastSlashUrl(ctx.audioSourceNode?.mediaElement.src) ? <MdOutlinePauseCircleOutline size={150}></MdOutlinePauseCircleOutline> : <MdOutlinePlayCircleOutline size={150}></MdOutlinePlayCircleOutline>}
 					</div>
-
-					<div className="bottomInfo" ref={bottomInfoRef}>
-						<div className="bottomInfoLeft">
-							<Link prefetch={true} href={'/selected_mix'}>
-								<p>{mixName}</p>
-								<p>{artist}</p>
-							</Link >
-						</div>
-						<div className="bottomInfoRight">
-							<p>{date}</p>
-						</div>
-					</div>
-
 				</div>
-			</div >
+
+				<div className="bottomInfo" ref={bottomInfoRef}>
+					<div className="bottomInfoLeft">
+						<Link prefetch={true} href={'/selected_mix'}>
+							<p>{mixName}</p>
+							<p>{artist}</p>
+							</Link >
+					</div>
+					<div className="bottomInfoRight">
+						<p>{date}</p>
+					</div>
+				</div>
+
+			</div>
+		</div >
 
 		</>
 	)
 };
 
-export default MixCard;
+	export default MixCard;
+		
+		
+		
+		

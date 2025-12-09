@@ -2,7 +2,7 @@ import { create } from "zustand";
 import { ctx } from "./app/audioContextBackendClass";
 
 type audioContextHelperStore = {
-	updateIsAudioPlaying: any;
+	setIsAudioPlaying: any;
 	setCurrentTime: any;
 	setAudioLength: any;
 	setCurrentPlayingTrack: any;
@@ -13,6 +13,8 @@ type audioContextHelperStore = {
 	isAudioPlaying: boolean;
 	currentPlayingTrack: any;
 	currentTrackInfo: Array<string>;
+	currentElement: any;
+	setCurrentElement: any;
 }
 
 export const useAudioContextHelperStore = create<audioContextHelperStore>((set) => ({
@@ -20,6 +22,7 @@ export const useAudioContextHelperStore = create<audioContextHelperStore>((set) 
 	audioLength: ctx.getAudioLength(),
 	currentTime: ctx.getCurrentAudioTime(),
 	currentPlayingTrack: ctx.audioElement?.src,
+	currentElement: ctx.audioElement,
 	currentTrackInfo: [],
 
 	setCurrentTrackInfo: (trackInfoArray: any) => {
@@ -27,6 +30,9 @@ export const useAudioContextHelperStore = create<audioContextHelperStore>((set) 
 	},
 	setCurrentPlayingTrack: () => {
 		set({ currentPlayingTrack: ctx.audioElement?.src });
+	},
+	setCurrentElement: (element: any) => {
+		set({ currentElement: element });
 	},
 	setAudioLength: () => {
 		set({ audioLength: ctx.getAudioLength() });
@@ -37,7 +43,7 @@ export const useAudioContextHelperStore = create<audioContextHelperStore>((set) 
 	setCurrentTime: () => {
 		set({ currentTime: ctx.getCurrentAudioTime() });
 	},
-	updateIsAudioPlaying: (bool: boolean) => {
-		set({ isAudioPlaying: ctx.isAudioPlaying == bool });
+	setIsAudioPlaying: (bool: boolean) => {
+		set({ isAudioPlaying: bool });
 	}
 }));

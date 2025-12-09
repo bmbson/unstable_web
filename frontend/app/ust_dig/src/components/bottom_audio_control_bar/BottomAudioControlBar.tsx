@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import './BottomAudioControlBar.css';
 import PlayPauseButton from "./play_pause_button/PlayPauseButton";
 import SettingsButton from "../settings_button/settings_button";
@@ -11,6 +11,7 @@ import { useAudioContextHelperStore } from "@/store";
 import { MdSkipNext, MdSkipPrevious } from "react-icons/md";
 import { useUIHelperStore } from "@/uiStore";
 import { ctx } from "@/app/audioContextBackendClass";
+import { extractAfterLastSlashUrl } from "@/app/ts/urlManipulationHelpers";
 
 
 function BottomAudioControlBar() {
@@ -18,11 +19,21 @@ function BottomAudioControlBar() {
 	const currentTime = useAudioContextHelperStore((state => state.currentTime));
 	const isAudioPlaying = useAudioContextHelperStore((state) => state.isAudioPlaying);
 	const currentTrackInfo = useAudioContextHelperStore((state) => state.currentTrackInfo);
-	const currentPlayingTrack = useAudioContextHelperStore((state) => state.currentPlayingTrack);
+	const currentElement = useAudioContextHelperStore((state) => state.currentElement);
 	const [bottomBarToggle, setBottomBarToggle] = useState(false);
 	const { isBottomBarActive, setIsBottomBarActive } = useUIHelperStore()
+	const setIsAudioPlaying = useAudioContextHelperStore((state => state.setIsAudioPlaying));
+	const setAudioLength = useAudioContextHelperStore((state) => state.setAudioLength);
+
+
+
+	const mixRef = useRef<null | HTMLAudioElement | undefined>(undefined);
+	useEffect(() => {
+		ctx.initAudioContext();
+	}, [])
 
 	useEffect(() => {
+		console.log("toggle Effect")
 		if (isAudioPlaying == true) {
 			setBottomBarToggle(true);
 			setIsBottomBarActive();
@@ -30,17 +41,42 @@ function BottomAudioControlBar() {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [isAudioPlaying]);
 
-	console.log(ctx.audioElement)
+	useEffect(() => {
+		if (currentElement) {
+			console.log("New track selected:", currentElement.src);
+			// mixRef.current!.src = currentElement.src
+			// Eerste mixRef is null omdat de audio tag nog niet gerendered is met de currentElement.
+			// ctx.setAudioElement(mixRef.current!)
+			ctx.setAudioElement(mixRef.current)
+			console.log(ctx.audioElement)
+			ctx.createAudioContext()
+			setIsAudioPlaying(true)
+			ctx.playAudioElement()
+		}
+	}, [currentElement, currentTrackInfo]);
+
+	function test50() {
+		setAudioLength()
+		ctx.playAudioElement()
+		console.log(ctx.audioElement!.src)
+		console.log(currentElement)
+		console.log(ctx.audioSourceNode)
+	}
 
 	return (
 		<div>
+			<audio
+				ref={mixRef}
+				// If currentElement exists, calculate the path. Otherwise, set src to undefined or ""
+				src={currentElement ? "./" + extractAfterLastSlashUrl(currentElement.src) : undefined}
+			/>
 			{bottomBarToggle &&
 				<div id="BottomAudioControlBar">
 					<div id="controlsWrapper">
 						<div className="playControlsWrapper">
 							<MdSkipPrevious onClick={() => ctx.getCTXInfo()} />
 							<PlayPauseButton></PlayPauseButton>
-							<MdSkipNext onClick={() => alert('unimplemented.')}></MdSkipNext>
+							<MdSkipNext onClick={() => test50()}></MdSkipNext>
 						</div>
 						<div className="nextButton"></div>
 						<VolumeControls></VolumeControls>
@@ -53,4 +89,4 @@ function BottomAudioControlBar() {
 	);
 }
 
-export default BottomAudioControlBar;
+export default BottomAudioControlBar

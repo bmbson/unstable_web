@@ -60,7 +60,7 @@ function MixPanel() {
 			<MixCard mixUrl={mix4.mixUrl} mixName={mix4.mixName} artist={mix4.mixCreator} imageSrc={mix4.mixImage} date={mix4.mixDate}></MixCard>
 
 			<ul id="mixCardList">
-				{data.map((item) => (
+				{data.map((item: any) => (
 					<li key={item.id}><MixCard mixUrl={mix1.mixUrl} mixName={item.mix_title} artist={item.mix_creator} imageSrc={mix1.mixImage} date={item.mix_picture_location}></MixCard></li>
 				))}
 			</ul>

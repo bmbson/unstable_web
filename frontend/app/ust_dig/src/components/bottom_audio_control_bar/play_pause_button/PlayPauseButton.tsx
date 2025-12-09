@@ -6,7 +6,7 @@ import { useAudioContextHelperStore } from "@/store";
 
 
 function PlayPauseButton() {
-	const updateIsAudioPlaying = useAudioContextHelperStore((state) => state.updateIsAudioPlaying);
+	const setIsAudioPlaying = useAudioContextHelperStore((state) => state.setIsAudioPlaying);
 	const isAudioPlaying = useAudioContextHelperStore((state) => state.isAudioPlaying);
 	const setAudioLength = useAudioContextHelperStore((state) => state.setAudioLength);
 	const setCurrentTime = useAudioContextHelperStore((state) => state.setCurrentTime);
@@ -20,28 +20,20 @@ function PlayPauseButton() {
 		}, 10);
 	}
 
-
 	return <>
 		<button onClick={() => {
 			{/* code duplication with mix_card.*/ }
-			if (ctx.audioSourceNode == undefined) {
-				console.log('add track to audio context');
-			} else {
-				if (isAudioPlaying == false) {
-					ctx.createAudioContext();
-					ctx.resumeAudioContext();
-					updateSeekerBarSliderTimer();
-					setAudioLength();
-					ctx.playAudioElement();
-					updateIsAudioPlaying(true);
-				} else {
-					ctx.pauseAudioElement();
-					updateIsAudioPlaying();
-				}
+			if (isAudioPlaying == true) {
+				setIsAudioPlaying(false)
+				ctx.pauseAudioElement()
+			} else if (isAudioPlaying == false) {
+				setIsAudioPlaying(true)
+				ctx.playAudioElement()
 			}
-		}} id="playPauseButton">
+		}}
+			id="playPauseButton">
 			{isAudioPlaying ? <MdPause></MdPause> : <MdPlayArrow></MdPlayArrow>}
-		</button>
+		</button >
 	</>
 }
 

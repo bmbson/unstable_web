@@ -30,6 +30,7 @@ function BottomAudioControlBar() {
 	const mixRef = useRef<null | HTMLAudioElement | undefined>(undefined);
 	useEffect(() => {
 		ctx.initAudioContext();
+		ctx.createAudioContext()
 	}, [])
 
 	useEffect(() => {
@@ -49,7 +50,8 @@ function BottomAudioControlBar() {
 			// ctx.setAudioElement(mixRef.current!)
 			ctx.setAudioElement(mixRef.current)
 			console.log(ctx.audioElement)
-			ctx.createAudioContext()
+			// ctx.createAudioContext()
+			ctx.audioElement.src = mixRef.current.src
 			setIsAudioPlaying(true)
 			ctx.playAudioElement()
 		}

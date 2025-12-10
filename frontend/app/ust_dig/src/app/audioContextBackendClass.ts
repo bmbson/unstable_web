@@ -31,7 +31,7 @@ class audioContextHelper {
 			console.log('Error: AudioContext not initialized!');
 		} else {
 			this.gainNode = this.audioCtx!.createGain();
-			this.createMediaElementSource();
+			this.createMediaElementSourceNode();
 			this.connectAudioElements();
 			console.log('Elements Connected');
 		}
@@ -73,7 +73,7 @@ class audioContextHelper {
 		this.audioElement = audioRef;
 	};
 
-	createMediaElementSource() {
+	createMediaElementSourceNode() {
 		if (this.audioElement == null) {
 			console.log("audioElement is null")
 		} else {
@@ -84,6 +84,10 @@ class audioContextHelper {
 			};
 		};
 	};
+
+	changeAudioTrack(audioRef: HTMLAudioElement | undefined) {
+		this.audioElement!.src = audioRef!.src
+	}
 
 	connectAudioElements() {
 		this.audioSourceNode?.connect(this.gainNode);

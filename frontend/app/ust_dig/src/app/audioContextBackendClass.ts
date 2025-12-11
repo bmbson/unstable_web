@@ -33,7 +33,6 @@ class audioContextHelper {
 			this.gainNode = this.audioCtx!.createGain();
 			this.createMediaElementSourceNode();
 			this.connectAudioElements();
-			console.log('Elements Connected');
 		}
 		return this.audioCtx;
 	};
@@ -71,6 +70,8 @@ class audioContextHelper {
 
 	setAudioElement(audioRef: HTMLAudioElement | undefined) {
 		this.audioElement = audioRef;
+		this.audioElement.load();
+		console.log("audioElement Selected")
 	};
 
 	createMediaElementSourceNode() {
@@ -79,6 +80,7 @@ class audioContextHelper {
 		} else {
 			try {
 				this.audioSourceNode = this.audioCtx?.createMediaElementSource(this.audioElement!);
+				console.log("audioSourceNode created.")
 			} catch (error) {
 				console.log(error);
 			};
@@ -86,12 +88,17 @@ class audioContextHelper {
 	};
 
 	changeAudioTrack(audioRef: HTMLAudioElement | undefined) {
-		this.audioElement!.src = audioRef!.src
+		if (audioRef?.src != undefined) {
+			ctx.audioElement!.src = audioRef!.src
+			ctx.audioElement!.load()
+			console.log("audio track changed.")
+		}
 	}
 
 	connectAudioElements() {
 		this.audioSourceNode?.connect(this.gainNode);
 		this.gainNode.connect(this.audioCtx?.destination!);
+		console.log("audio elements connected")
 	};
 
 	playAudioElement() {

@@ -33,6 +33,7 @@ function MixCard({ mixName, artist, mixUrl, date, width, height, imageSrc = null
 	const setIsAudioPlaying = useAudioContextHelperStore((state => state.setIsAudioPlaying));
 
 	const isAudioPlaying = useAudioContextHelperStore((state => state.isAudioPlaying));
+	const currentElement = useAudioContextHelperStore((state) => state.currentElement);
 	const currentPlayingTrack = useAudioContextHelperStore((state => state.currentPlayingTrack))
 
 	function showInfoOnMouseOver() {
@@ -83,7 +84,7 @@ function MixCard({ mixName, artist, mixUrl, date, width, height, imageSrc = null
 						}
 					}}>
 						<div id="playPauseImage">
-							{isAudioPlaying && extractAfterLastSlashUrl(mixUrl) == extractAfterLastSlashUrl(ctx.audioSourceNode?.mediaElement.src) ? <MdOutlinePauseCircleOutline size={150}></MdOutlinePauseCircleOutline> : <MdOutlinePlayCircleOutline size={150}></MdOutlinePlayCircleOutline>}
+							{isAudioPlaying && extractAfterLastSlashUrl(mixUrl) == extractAfterLastSlashUrl(currentElement.src) ? <MdOutlinePauseCircleOutline size={150}></MdOutlinePauseCircleOutline> : <MdOutlinePlayCircleOutline size={150}></MdOutlinePlayCircleOutline>}
 						</div>
 					</div>
 

@@ -25,16 +25,14 @@ function BottomAudioControlBar() {
 	const setIsAudioPlaying = useAudioContextHelperStore((state => state.setIsAudioPlaying));
 	const setAudioLength = useAudioContextHelperStore((state) => state.setAudioLength);
 
-
-
 	const mixRef = useRef<null | HTMLAudioElement | undefined>(undefined);
 	useEffect(() => {
 		ctx.initAudioContext();
+		ctx.setAudioElement(mixRef.current!)
 		ctx.createAudioContext()
 	}, [])
 
 	useEffect(() => {
-		console.log("toggle Effect")
 		if (isAudioPlaying == true) {
 			setBottomBarToggle(true);
 			setIsBottomBarActive();
@@ -45,17 +43,15 @@ function BottomAudioControlBar() {
 	useEffect(() => {
 		if (currentElement) {
 			console.log("New track selected:", currentElement.src);
-			// mixRef.current!.src = currentElement.src
 			// Eerste mixRef is null omdat de audio tag nog niet gerendered is met de currentElement.
-			// ctx.setAudioElement(mixRef.current!)
-			ctx.setAudioElement(mixRef.current)
-			console.log(ctx.audioElement)
-			// ctx.createAudioContext()
-			ctx.audioElement.src = mixRef.current.src
+			ctx.audioElement!.pause()
+			ctx.audioElement!.src = mixRef.current!.src
+			ctx.audioElement!.load()
 			setIsAudioPlaying(true)
-			ctx.playAudioElement()
+			ctx.resumeAudioContext()
+			ctx.audioElement!.play()
 		}
-	}, [currentElement, currentTrackInfo]);
+	}, [currentElement]);
 
 	function test50() {
 		setAudioLength()
@@ -70,7 +66,7 @@ function BottomAudioControlBar() {
 			<audio
 				ref={mixRef}
 				// If currentElement exists, calculate the path. Otherwise, set src to undefined or ""
-				src={currentElement ? "./" + extractAfterLastSlashUrl(currentElement.src) : undefined}
+				src={currentElement ? "./" + extractAfterLastSlashUrl(currentElement.src) : null}
 			/>
 			{bottomBarToggle &&
 				<div id="BottomAudioControlBar">

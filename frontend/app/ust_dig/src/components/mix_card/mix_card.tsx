@@ -49,6 +49,7 @@ function MixCard({ mixName, artist, mixUrl, date, width, height, imageSrc = null
 	function setCTXAudioElement() {
 		setCurrentTrackInfo([mixName, artist, imageSrc])
 		setCurrentElement(mixCardAudioRef.current!);
+		setAudioLength();
 	};
 
 	function updateSeekerBarSliderTimer() {

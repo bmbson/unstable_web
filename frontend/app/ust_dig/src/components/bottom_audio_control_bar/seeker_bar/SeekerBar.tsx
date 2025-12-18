@@ -33,7 +33,7 @@ function SeekerBar(props: Props) {
 	}
 
 	useEffect(() => {
-		setInterval(() => {
+		const intervalId = setInterval(() => {
 			// Update currentAudioTime every 10ms.
 			setAudioLength();
 			setCurrentTime();
@@ -43,6 +43,9 @@ function SeekerBar(props: Props) {
 				ctx.pauseAudioElement();  // Pause actual audio
 			}
 		}, 50);
+		return () => {
+			clearInterval(intervalId); // Clear the interval using the stored ID
+		};
 
 	}, [currentTime]);
 

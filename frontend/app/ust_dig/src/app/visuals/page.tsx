@@ -1,12 +1,14 @@
 'use client'
 import React from "react"
 import './page.css'
+import "p5.sound/dist/p5.sound.js"
 import { P5Canvas, Sketch } from "@p5-wrapper/react"
 
 const sketch: Sketch = p5 => {
 	p5.setup = () => p5.createCanvas(600, 400, p5.WEBGL);
 
 	p5.draw = () => {
+
 		p5.background(250);
 		p5.normalMaterial();
 		p5.push();
@@ -22,6 +24,8 @@ export default function Visuals() {
 	return (
 		<main>
 			<div className="textDiv">
+				<P5Canvas sketch={sketch} />
+				<P5Canvas sketch={sketch} />
 				<P5Canvas sketch={sketch} />
 			</div>
 		</main>

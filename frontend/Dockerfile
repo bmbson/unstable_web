@@ -1,4 +1,6 @@
 FROM node:latest
+
+COPY ./app/ust_dig /ust_dig
  
 WORKDIR /ust_dig
   

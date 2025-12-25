@@ -1,86 +1,81 @@
 li {
-  cursor: pointer;
+	cursor: pointer;
 }
 
 #TopNavigationBar {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  height: 60px;
-  margin: 0em 1em 0em 1em;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	height: 60px;
+	margin: 0em 1em 0em 1em;
 }
 
 #TopNavigationBarItem {
-  display: flex;
-  align-items: center;
-  padding-right: 20px;
-  padding-left: 20px;
-  height: 100%;
+	display: flex;
+	align-items: center;
+	padding-right: 20px;
+	padding-left: 20px;
+	height: 100%;
 }
 
 #TopNavigationBarItemWrapper {
-  height: 100%;
-  display: flex;
-  flex-direction: row;
+	height: 100%;
+	display: flex;
+	flex-direction: row;
 
 }
 
 #TopNavigationBarItemWrapper:hover,
 #SideNavigationBarItem:hover {
-  background-color: rgb(83, 83, 83);
-  color: rgb(161, 161, 161);
-  width: 100%;
-}
-
-#LogoImage {
-  display: flex;
-  flex-direction: row;
+	background-color: rgb(83, 83, 83);
+	color: rgb(161, 161, 161);
+	width: 100%;
 }
 
 #Logo {
-  margin-left: 50px;
+	margin-left: 50px;
 }
 
 #BigScreenNavigationMenu {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  height: 100%;
-  margin-right: 50px;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	height: 100%;
+	margin-right: 50px;
 }
 
 .SmallScreenNavigationMenu {
-  display: none;
+	display: none;
 }
 
 @media screen and (max-width: 800px) {
-  #TopNavigationBar {
-    justify-content: space-between;
-  }
+	#TopNavigationBar {
+		justify-content: space-between;
+	}
 
-  #BigScreenNavigationMenu {
-    display: none;
-  }
+	#BigScreenNavigationMenu {
+		display: none;
+	}
 
-  #SideNavigationMenu {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    background-color: rgba(95, 95, 95, 0.205);
-    width: 150px;
-  }
+	#SideNavigationMenu {
+		display: flex;
+		flex-direction: column;
+		gap: 10px;
+		background-color: rgba(95, 95, 95, 0.205);
+		width: 150px;
+	}
 
-  .SmallScreenNavigationMenu {
-    display: flow;
-  }
+	.SmallScreenNavigationMenu {
+		display: flow;
+	}
 
-  #Logo {
-    margin-left: auto;
-    margin-right: auto;
-  }
+	#Logo {
+		margin-left: auto;
+		margin-right: auto;
+	}
 }
 
 #HamburgerMenu {
-  cursor: pointer;
+	cursor: pointer;
 }

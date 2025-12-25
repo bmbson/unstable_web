@@ -2,7 +2,7 @@ main {
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
-	align-items: normal;
+	align-items: center;
 	height: 100%;
 }
 

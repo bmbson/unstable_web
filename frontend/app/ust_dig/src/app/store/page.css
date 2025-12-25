@@ -1,0 +1,18 @@
+main {
+	align-items: center;
+	justify-content: center;
+	height: 100%;
+}
+
+.textDiv {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
+}
+
+.wip {
+	align-self: center;
+	font-size: 32;
+	text-align: center;
+}

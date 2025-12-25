@@ -5,9 +5,7 @@ export default function Store() {
 	return (
 		<main>
 			<div className="textDiv">
-				<p>Work</p>
-				<p>In</p>
-				<p>Process</p>
+				<p className="wip">W.I.P</p>
 			</div>
 		</main>
 	)

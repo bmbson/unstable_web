@@ -1,13 +1,13 @@
+main {
+	display: flex;
+	align-items: start;
+	flex-direction: row;
+	justify-content: space-between;
+}
+
 .searchBarsWrapper {
 	display: flex;
 	justify-content: space-evenly;
-}
-
-main {
-	display: flex;
-	flex-direction: row;
-	align-items: normal;
-	justify-content: space-between;
 }
 
 .visuals {

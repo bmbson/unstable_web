@@ -5,9 +5,7 @@ export default function About() {
 	return (
 		<main>
 			<div className="textDiv">
-				<p>Work</p>
-				<p>In</p>
-				<p>Process</p>
+				<p>Sounds and w/e.</p>
 			</div>
 		</main>
 	)

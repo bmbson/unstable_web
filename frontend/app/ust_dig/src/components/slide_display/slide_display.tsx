@@ -35,7 +35,7 @@ function SlideDisplay({ src, alt, index, controlL, controlR }: { src: string; al
 			<div className="slideDisplayControl" id="slideDisplayControl-L" onClick={controlL} ></div>
 			<Link id="linkWrapper" href={items[index].url}>
 				<Image className="image"
-					sizes=""
+					sizes="auto auto"
 					fill={true} src={items[index].imageUrl} alt={items[index].title} ></Image>
 			</Link>
 			<div className="slideDisplayControl" id="slideDisplayControl-R" onClick={controlR} ></div>

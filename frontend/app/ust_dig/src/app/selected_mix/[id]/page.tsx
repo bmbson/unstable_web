@@ -1,7 +1,10 @@
+'use client'
 import React from "react";
 import './page.css';
+import { usePathname, useParams } from 'next/navigation'
+import { use } from 'react'
+
 import VisualCard from "@/components/visual_card/visual_card";
-import MixPanel from "@/components/mix_panel/mix_panel";
 //
 // Mix Title
 // Creator Name
@@ -12,6 +15,8 @@ import MixPanel from "@/components/mix_panel/mix_panel";
 //
 //
 export default function Selected_Mix() {
+	const pathname = usePathname()
+	const params = useParams()
 	return (
 		<main>
 			<div id="mainWrapper">
@@ -21,11 +26,12 @@ export default function Selected_Mix() {
 				<div id="mixPanelWrapper">
 					<div id="description">
 						<p>Description:</p>
-						<p>Music or w/e.</p>
+						<p>Music or w/e {params.data}.</p>
+						<p>{pathname}</p>
 						{/* Description Here*/}
 					</div>
 				</div>
 			</div>
 		</main >
 	)
-}
+};

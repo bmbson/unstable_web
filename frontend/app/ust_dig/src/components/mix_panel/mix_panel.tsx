@@ -47,7 +47,6 @@ function MixPanel() {
 	// var data = await fetchTest();
 	const fetcher = (url: any) => fetch(url).then((res) => res.json())
 
-
 	const { data, error } = useSWR('/api/mixes', fetcher, {
 		revalidateOnFocus: false,
 		revalidateOnReconnect: false,

@@ -18,7 +18,6 @@ export type MixTyping = {
 	genres: string;
 };
 
-
 export async function fetchTest() {
 	noStore();
 

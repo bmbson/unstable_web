@@ -51,7 +51,7 @@ services:
     image: unstable-upload-page
     restart: always
     ports:
-      - 7777:7777
+      - 7777:3000
     volumes:
       - ./upload-page/app:/app:Z 
     networks:

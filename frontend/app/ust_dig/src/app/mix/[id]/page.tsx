@@ -5,6 +5,7 @@ import { usePathname, useParams } from 'next/navigation'
 import { use } from 'react'
 
 import VisualCard from "@/components/visual_card/visual_card";
+import SelectedMixCard from "@/components/selected_mix_card/SelectedMixCard";
 //
 // Mix Title
 // Creator Name
@@ -19,19 +20,7 @@ export default function Selected_Mix() {
 	const params = useParams()
 	return (
 		<main>
-			<div id="mainWrapper">
-				<div id="artistInfoWrapper">
-					<VisualCard height="300px" width="300px" ></VisualCard>
-				</div>
-				<div id="mixPanelWrapper">
-					<div id="description">
-						<p>Description:</p>
-						<p>Music or w/e {params.data}.</p>
-						<p>{pathname}</p>
-						{/* Description Here*/}
-					</div>
-				</div>
-			</div>
+			<SelectedMixCard></SelectedMixCard>
 		</main >
 	)
 };

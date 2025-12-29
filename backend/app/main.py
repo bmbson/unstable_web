@@ -1,6 +1,6 @@
 from typing import Annotated
 from fastapi import FastAPI, Depends, UploadFile, Form
-from sqlmodel import Session, Field, SQLModel, create_engine
+from sqlmodel import Session, Field, SQLModel, create_engine, select
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from pathlib import Path
@@ -46,6 +46,7 @@ def save_mix_sql(
     mix_creator: str,
     mix_audio_location: str,
     mix_picture_location: str,
+    description: str,
 ) -> None:
     try:
         connection = psycopg2.connect(
@@ -59,8 +60,8 @@ def save_mix_sql(
         cur = connection.cursor()
         cur.execute(
             """
-            INSERT INTO mix (mix_title, mix_creator, mix_audio_location, mix_picture_location)
-            VALUES (%s, %s, %s, %s)
+            INSERT INTO mix (mix_title, mix_creator, mix_audio_location, mix_picture_location, description)
+            VALUES (%s, %s, %s, %s, %s)
              RETURNING id;
         """,
             (
@@ -68,6 +69,7 @@ def save_mix_sql(
                 mix_creator,
                 mix_audio_location,
                 mix_picture_location,
+                description,
             ),
         )
         connection.commit()
@@ -95,6 +97,7 @@ class Mix(SQLModel, table=True):
     mixCreator: str
     mixAudioLocation: str
     mixPictureLocation: str
+    description: str
 
 
 class MixUpload(BaseModel):
@@ -120,6 +123,7 @@ def uploadmix(
     mixCreator: Annotated[str, Form()],
     audioFile: UploadFile,
     imageFile: UploadFile,
+    description: Annotated[str, Form()],
 ):
     if audioFile.content_type.startswith(
         "audio/"
@@ -135,6 +139,7 @@ def uploadmix(
             mixCreator,
             mix_folder + f"/{audioFile.filename}",
             mix_folder + f"/{audioFile.filename}",
+            description,
         )
 
         try:
@@ -174,3 +179,11 @@ def read_item(mix: Mix, session: SessionDep):
     session.commit()
     session.refresh(mix)
     return mix
+
+
+@app.get("/getmix/{mixTitle}")
+def get_mix(mixTitle: str, session: SessionDep):
+    print("ROUTE HIT:", mixTitle)
+    statement = select(Mix).where(Mix.mixTitle == mixTitle)
+    result = session.execute(statement).scalars().all()
+    return result

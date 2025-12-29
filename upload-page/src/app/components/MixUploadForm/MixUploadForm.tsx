@@ -28,6 +28,8 @@ export default function MixUploadForm() {
 				<input type="file" name="audioFile" id="audioFile" accept="audio/*" required />
 				<p>Image Upload</p>
 				<input type="file" name="imageFile" id="imageFile" accept="image/*" required />
+				<p>Description</p>
+				<input type="text" name="description" id="description" required />
 				<button type="submit">Upload Mix</button>
 			</form>
 		</div>

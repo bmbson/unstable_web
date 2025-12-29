@@ -72,8 +72,8 @@ function MixCard({ mixName, artist, mixUrl, date, width, height, imageSrc = null
 
 				{/* Deze button moet een clickable image worden.*/}
 				<div className="imageWrapper" style={{ position: 'relative' }}>
-					<Image id='image' fill={true} src={imageSrc!} alt={'Image'}>
-					</Image>
+					{imageSrc && <Image id='image' fill={true} src={imageSrc!} alt={'Image'}>
+					</Image>}
 					<div className='mixCardPlayPauseButton' ref={mixCardRef} onClick={() => {
 						if (isAudioPlaying == true) {
 							setIsAudioPlaying(false)
@@ -88,10 +88,10 @@ function MixCard({ mixName, artist, mixUrl, date, width, height, imageSrc = null
 							{isAudioPlaying && extractAfterLastSlashUrl(mixUrl) == extractAfterLastSlashUrl(currentElement.src) ? <MdOutlinePauseCircleOutline size={150}></MdOutlinePauseCircleOutline> : <MdOutlinePlayCircleOutline size={150}></MdOutlinePlayCircleOutline>}
 						</div>
 					</div>
-
 					<div className="bottomInfo" ref={bottomInfoRef}>
 						<div className="bottomInfoLeft">
-							<Link prefetch={true} href={'/selected_mix'}>
+							<Link prefetch={true} href={`/mix/${mixName}`
+							}>
 								<p>{mixName}</p>
 								<p>{artist}</p>
 							</Link >
@@ -100,10 +100,8 @@ function MixCard({ mixName, artist, mixUrl, date, width, height, imageSrc = null
 							<p>{date}</p>
 						</div>
 					</div>
-
 				</div>
 			</div >
-
 		</>
 	)
 };

@@ -18,9 +18,11 @@ export default function SelectedMixCard() {
 		revalidateIfStale: false,
 	});
 
-	console.log(data)
 
-	JSON.stringify(data, null, 2)
+	if (data) {
+		JSON.stringify(data, null, 2)
+		console.log(data[0].mixAudioLocation)
+	}
 
 	return (
 		<div id="selectedMixWrapper">

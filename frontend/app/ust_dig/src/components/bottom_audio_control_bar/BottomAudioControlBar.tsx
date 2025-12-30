@@ -43,13 +43,16 @@ function BottomAudioControlBar() {
 	useEffect(() => {
 		if (currentElement) {
 			console.log("New track selected:", currentElement.src);
+			console.log(extractAfterLastSlashUrl(mixRef.current!.src) + " current");
+			console.log(mixRef.current?.getAttribute("src") + " current getAttribute");
 			// Eerste mixRef is null omdat de audio tag nog niet gerendered is met de currentElement.
-			ctx.audioElement!.pause()
-			ctx.audioElement!.src = mixRef.current!.src
-			ctx.audioElement!.load()
-			setIsAudioPlaying(true)
-			ctx.resumeAudioContext()
-			ctx.audioElement!.play()
+			ctx.audioElement!.pause();
+			//ctx.audioElement!.src = mixRef.current!.src
+			ctx.audioElement!.src = mixRef.current?.getAttribute('src');
+			ctx.audioElement!.load();
+			setIsAudioPlaying(true);
+			ctx.resumeAudioContext();
+			ctx.audioElement!.play();
 		}
 	}, [currentElement]);
 
@@ -65,7 +68,7 @@ function BottomAudioControlBar() {
 			<audio
 				ref={mixRef}
 				// If currentElement exists, calculate the path. Otherwise, set src to undefined or ""
-				src={currentElement ? "./" + extractAfterLastSlashUrl(currentElement.src) : null}
+				src={currentElement ? "/music/" + extractAfterLastSlashUrl(currentElement.src) : null}
 			/>
 			{bottomBarToggle &&
 				<div id="BottomAudioControlBar">

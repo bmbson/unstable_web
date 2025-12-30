@@ -7,7 +7,7 @@ import { fetchTest, MixTyping, sql } from "@/app/ts/mix_panel/data";
 import postgres, { RowList } from "postgres";
 
 const mix1 = {
-	mixUrl: './tm404.mp3',
+	mixUrl: '/music/tm404.mp3',
 	mixName: 'dub techno',
 	mixDate: '2001',
 	mixImage: '/images/tm404.jpg',
@@ -16,7 +16,7 @@ const mix1 = {
 };
 
 const mix2 = {
-	mixUrl: './keef.flac',
+	mixUrl: '/music/keef.flac',
 	mixName: 'chi drill mix',
 	mixDate: '2012',
 	mixImage: '/images/so.jpg',
@@ -25,7 +25,7 @@ const mix2 = {
 }
 
 const mix3 = {
-	mixUrl: './nationHoe.wav',
+	mixUrl: '/music/nationHoe.wav',
 	mixName: 'footwork',
 	mixDate: '2012',
 	mixImage: '/images/testImage.jpg',
@@ -34,7 +34,7 @@ const mix3 = {
 }
 
 const mix4 = {
-	mixUrl: './sgp.mp3',
+	mixUrl: '/music/sgp.mp3',
 	mixName: 'SGP Mix',
 	mixDate: '2016',
 	mixImage: '/images/blood-moon.png',

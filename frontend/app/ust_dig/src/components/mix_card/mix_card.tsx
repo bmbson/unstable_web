@@ -65,6 +65,8 @@ function MixCard({ mixName, artist, mixUrl, date, width, height, imageSrc = null
 		throw new Error('Function not implemented.');
 	};
 
+	console.log(mixUrl)
+
 	return (
 		<>
 			<div className="mixCard" onMouseOver={showInfoOnMouseOver} onMouseLeave={hideInfoOnMouseLeave} >

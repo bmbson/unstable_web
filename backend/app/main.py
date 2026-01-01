@@ -18,7 +18,9 @@ engine = create_engine(postgres_url, echo=True)
 # Voor CORS
 origins = [
     "https://10.1.0.40",
+    "https://10.1.0.40/*",
     "https://10.1.0.40:3000",
+    "https://10.1.0.40:3000/*",
     "http://localhost",
     "*",
 ]

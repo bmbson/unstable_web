@@ -46,8 +46,7 @@ const mix4 = {
 function MixPanel() {
 	// var data = await fetchTest();
 	const fetcher = (url: any) => fetch(url).then((res) => res.json())
-
-	const { data, error } = useSWR('/api/mixes', fetcher, {
+	const { data, error, isLoading } = useSWR('http://localhost:9999/getmixes', fetcher, {
 		revalidateOnFocus: false,
 		revalidateOnReconnect: false,
 		revalidateIfStale: false,
@@ -65,8 +64,8 @@ function MixPanel() {
 			<MixCard mixUrl={mix4.mixUrl} mixName={mix4.mixName} artist={mix4.mixCreator} imageSrc={mix4.mixImage} date={mix4.mixDate}></MixCard>
 
 			<ul id="mixCardList">
-				{data.map((item: any) => (
-					<li key={item.id}><MixCard mixUrl={mix1.mixUrl} mixName={item.mix_title} artist={item.mix_creator} imageSrc={mix1.mixImage} date={item.mix_picture_location}></MixCard></li>
+				{data && data.map((item: any) => (
+					<li key={item.id}><MixCard mixUrl={item.mix_audio_location} mixName={item.mix_title} artist={item.mix_creator} imageSrc={"http://10.1.0.10:9999" + item.mix_picture_location} date={"2020"} description={item.description}></MixCard></li>
 				))}
 			</ul>
 		</div >

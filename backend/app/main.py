@@ -2,6 +2,7 @@ from typing import Annotated
 from fastapi import FastAPI, Depends, UploadFile, Form
 from sqlmodel import Session, Field, SQLModel, create_engine, select
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel
 from pathlib import Path
 import os
@@ -31,6 +32,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
 def save_upload_file(upload_file: UploadFile, destination: Path) -> None:
     try:
@@ -39,7 +41,6 @@ def save_upload_file(upload_file: UploadFile, destination: Path) -> None:
             print("upload succesful.")
     finally:
         upload_file.file.close()
-
 
 def save_mix_sql(
     mix_title: str,
@@ -77,73 +78,66 @@ def save_mix_sql(
     except Exception as e:
         print(f"Error: {e}")
 
-
 # https://fastapi.tiangolo.com/tutorial/sql-databases/?h=sessiondep#create-a-session-dependency
 def get_session():
     with Session(engine) as session:
         yield session
 
-
 SessionDep = Annotated[Session, Depends(get_session)]
-
 
 def create_db_and_tables():
     SQLModel.metadata.create_all(engine)
 
-
 class Mix(SQLModel, table=True):
     id: int | None = Field(default=None, primary_key=True)
-    mixTitle: str
-    mixCreator: str
-    mixAudioLocation: str
-    mixPictureLocation: str
+    mix_title: str
+    mix_creator: str
+    mix_audio_location: str
+    mix_picture_location: str
     description: str
 
-
 class MixUpload(BaseModel):
-    mixTitle: str
-    mixCreator: str
-
+    mix_title: str
+    mix_creator: str
 
 @app.on_event("startup")
 def on_startup():
     create_db_and_tables()
 
-
 @app.get("/")
 def read_root():
     return {}
 
-
 # https://fastapi.tiangolo.com/tutorial/request-forms/#import-form
 # https://fastapi.tiangolo.com/tutorial/request-files/#file-parameters-with-uploadfile
-@app.post("/")
+@app.post("/uploadmix")
 def uploadmix(
-    mixTitle: Annotated[str, Form()],
-    mixCreator: Annotated[str, Form()],
-    audioFile: UploadFile,
-    imageFile: UploadFile,
+    mix_title: Annotated[str, Form()],
+    mix_creator: Annotated[str, Form()],
+    audio_file: UploadFile,
+    image_file: UploadFile,
     description: Annotated[str, Form()],
 ):
-    if audioFile.content_type.startswith(
+    if audio_file.content_type.startswith(
         "audio/"
-    ) and imageFile.content_type.startswith("image/"):
+    ) and image_file.content_type.startswith("image/"):
         date_object = datetime.datetime.now()
 
         mix_folder = (
-            f"/storage/{date_object.year}/{date_object.month}/{mixCreator}/{mixTitle}"
+            f"/static/{date_object.year}/{date_object.month}/{mix_creator}/{mix_title}"
         )
+        app_mix_folder = Path(f"/app/static/{date_object.year}/{date_object.month}/{mix_creator}/{mix_title}")
 
         save_mix_sql(
-            mixTitle,
-            mixCreator,
-            mix_folder + f"/{audioFile.filename}",
-            mix_folder + f"/{audioFile.filename}",
+            mix_title,
+            mix_creator,
+            mix_folder + f"/{audio_file.filename}", # audio
+            mix_folder + f"/{image_file.filename}", # image
             description,
         )
 
         try:
-            os.makedirs(mix_folder)
+            os.makedirs(app_mix_folder)
             print(f"Directory '{mix_folder}' created successfully.")
         except FileExistsError:
             print(f"Directory '{mix_folder}' already exists.")
@@ -156,22 +150,24 @@ def uploadmix(
             return e
 
         try:
-            save_upload_file(audioFile, Path(mix_folder + f"/{audioFile.filename}"))
-            save_upload_file(imageFile, Path(mix_folder + f"/{imageFile.filename}"))
+            app_mix_folder = Path(f"/app/static/{date_object.year}/{date_object.month}/{mix_creator}/{mix_title}")
+
+            save_upload_file(audio_file, app_mix_folder / audio_file.filename)
+            save_upload_file(image_file, app_mix_folder / image_file.filename)
+                    
             print("Upload success.")
         except Exception as e:
             print(f"An error occured: {e}")
             return e
 
         return {
-            "": mixTitle,
-            "mixCreator": mixCreator,
-            "audioFile": f"/storage/{mixCreator}/{mixTitle}/{audioFile.filename}",
-            "imageFile": f"/storage/{mixCreator}/{mixTitle}/{audioFile.filename}",
+            "": mix_title,
+            "mix_creator": mix_creator,
+            "audio_file": f"/static/{mix_creator}/{mix_title}/{audio_file.filename}",
+            "image_file": f"/static/{mix_creator}/{mix_title}/{audio_file.filename}",
         }
     else:
         return {"Error": "Wrong Format"}
-
 
 @app.post("/addMix")
 def read_item(mix: Mix, session: SessionDep):
@@ -180,10 +176,27 @@ def read_item(mix: Mix, session: SessionDep):
     session.refresh(mix)
     return mix
 
-
-@app.get("/getmix/{mixTitle}")
-def get_mix(mixTitle: str, session: SessionDep):
-    print("ROUTE HIT:", mixTitle)
-    statement = select(Mix).where(Mix.mixTitle == mixTitle)
+@app.get("/getmix/{mix_title}")
+def get_mix(mix_title: str, session: SessionDep):
+    print("ROUTE HIT:", mix_title)
+    statement = select(Mix).where(Mix.mix_title == mix_title)
     result = session.execute(statement).scalars().all()
     return result
+
+@app.get("/getmixes/")
+def get_mixes(session: SessionDep): 
+    statement = select(Mix)
+    result = session.execute(statement).scalars().all()
+    return result
+
+@app.get("/getaudiofile/{filename}")
+def get_file(session: SessionDep, filename: str):
+    return FileResponse(f"/app/static/{filename}")
+
+@app.get("/getimagefile/{filename}")
+def get_file(session: SessionDep, filename: str):
+    return FileResponse(f"/app/static/{filename}")
+
+@app.get("/hello")
+def hello(session: SessionDep):
+    return "hello" 

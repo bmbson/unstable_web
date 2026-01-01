@@ -54,13 +54,6 @@ function MixPanel() {
 
 	return (
 		<div id="mixPanel">
-			<MixCard mixUrl={mix1.mixUrl} mixName={mix1.mixName} artist={mix1.mixCreator} imageSrc={mix1.mixImage} date={mix1.mixDate}></MixCard>
-			<MixCard mixUrl={mix2.mixUrl} mixName={mix2.mixName} artist={mix2.mixCreator} imageSrc={mix2.mixImage} date={mix2.mixDate}></MixCard>
-			<MixCard mixUrl={mix3.mixUrl} mixName={mix3.mixName} artist={mix3.mixCreator} imageSrc={mix3.mixImage} date={mix3.mixDate}></MixCard>
-			<MixCard mixUrl={mix4.mixUrl} mixName={mix4.mixName} artist={mix4.mixCreator} imageSrc={mix4.mixImage} date={mix4.mixDate}></MixCard>
-			<MixCard mixUrl={mix1.mixUrl} mixName={mix1.mixName} artist={mix1.mixCreator} imageSrc={mix1.mixImage} date={mix1.mixDate}></MixCard>
-			<MixCard mixUrl={mix2.mixUrl} mixName={mix2.mixName} artist={mix2.mixCreator} imageSrc={mix2.mixImage} date={mix2.mixDate}></MixCard>
-			<MixCard mixUrl={mix3.mixUrl} mixName={mix3.mixName} artist={mix3.mixCreator} imageSrc={mix3.mixImage} date={mix3.mixDate}></MixCard>
 			<MixCard mixUrl={mix4.mixUrl} mixName={mix4.mixName} artist={mix4.mixCreator} imageSrc={mix4.mixImage} date={mix4.mixDate}></MixCard>
 
 			<ul id="mixCardList">

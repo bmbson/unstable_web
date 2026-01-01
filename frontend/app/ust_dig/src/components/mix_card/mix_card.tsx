@@ -70,7 +70,7 @@ function MixCard({ mixName, artist, mixUrl, date, width, height, imageSrc = null
 	return (
 		<>
 			<div className="mixCard" onMouseOver={showInfoOnMouseOver} onMouseLeave={hideInfoOnMouseLeave} >
-				<audio ref={mixCardAudioRef} src={mixUrl} />
+				<audio ref={mixCardAudioRef} src={mixUrl} crossOrigin="anonymous" />
 
 				{/* Deze button moet een clickable image worden.*/}
 				<div className="imageWrapper" style={{ position: 'relative' }}>

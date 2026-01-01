@@ -68,7 +68,7 @@ function BottomAudioControlBar() {
 			<audio
 				ref={mixRef}
 				// If currentElement exists, calculate the path. Otherwise, set src to undefined or ""
-				src={currentElement ? "/music/" + extractAfterLastSlashUrl(currentElement.src) : null}
+				src={currentElement ? currentElement.src : null}
 			/>
 			{bottomBarToggle &&
 				<div id="BottomAudioControlBar">

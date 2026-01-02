@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import Image from 'next/image'
 import './slide_display.css'
 import Link from "next/link";
+import useSWR from "swr";
 
 interface slideDisplayImageItem {
 	title: string;
@@ -30,14 +31,25 @@ const items: slideDisplayImageItem[] = [
 
 function SlideDisplay({ src, alt, index, controlL, controlR }: { src: string; alt: string; index: any, controlL: any, controlR: any }) {
 
+	const fetcher = (url: any) => fetch(url).then((res) => res.json())
+	const { data, error, isLoading } = useSWR('http://localhost:9999/getcarousel', fetcher, {
+		revalidateOnFocus: false,
+		revalidateOnReconnect: false,
+		revalidateIfStale: false,
+	});
+
+	console.log(data)
+
 	return (
 		<div className="slideDisplayWrapper">
 			<div className="slideDisplayControl" id="slideDisplayControl-L" onClick={controlL} ></div>
-			<Link id="linkWrapper" href={items[index].url}>
+			{data && <Link id="linkWrapper" href={/mix/ + data[0].select_mix_link}>
 				<Image className="image"
 					sizes="auto auto"
-					fill={true} src={items[index].imageUrl} alt={items[index].title} ></Image>
+					fill={true} src={data[0].img_src} alt={"text"} ></Image>
+
 			</Link>
+			}
 			<div className="slideDisplayControl" id="slideDisplayControl-R" onClick={controlR} ></div>
 		</div >
 	)

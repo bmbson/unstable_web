@@ -6,6 +6,7 @@ import SlideDisplay from '@/components/slide_display/slide_display';
 import CarouselIndicator from '@/components/carousel_indicator/carousel_indicator';
 import { useEffect, useState } from 'react';
 import { ctx } from './audioContextBackendClass';
+import useSWR from 'swr';
 
 const string = '/images/frontpage_images/sea.jpg'
 
@@ -45,7 +46,7 @@ export default function Home() {
 		} else {
 
 		}
-	},); // optional dependency array
+	},);
 
 	return (
 		<main>

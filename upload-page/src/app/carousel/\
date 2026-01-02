@@ -83,7 +83,7 @@ def save_mix_sql(
         print(f"Error: {e}")
 
 
-def save_carousel_sql(select_mix_link: str, img_src: str) -> None:
+def save_carousel_sql(select_mix_link: str, image_src: str) -> None:
     try:
         connection = psycopg2.connect(
             dbname="db",
@@ -102,8 +102,6 @@ def save_carousel_sql(select_mix_link: str, img_src: str) -> None:
             """,
             (select_mix_link, img_src),
         )
-        connection.commit()
-        print("Info: SQL Row Inserted")
 
     except Exception as e:
         print(f"An Error Occured: {e}")
@@ -132,7 +130,7 @@ class Mix(SQLModel, table=True):
     description: str
 
 
-class Carousel(SQLModel, table=True):
+class FrontpageCarousel(SQLModel, table=True):
     id: int | None = Field(default=None, primary_key=True)
     select_mix_link: str
     img_src: str
@@ -253,13 +251,12 @@ def get_file(session: SessionDep, filename: str):
 
 
 @app.post("/uploadcarousel")
-def uploadcarousel(
+def hello(
     session: SessionDep, select_mix_link: Annotated[str, Form()], image_file: UploadFile
 ):
-    carousel_folder = Path(f"/app/static/carousel/{select_mix_link}")
+    carousel_folder = Path(f"/app/static/{select_mix_link}")
 
-    path = carousel_folder / image_file.filename
-    save_carousel_sql(select_mix_link, str(carousel_folder) + f"/{image_file.filename}")
+    save_carousel_sql(select_mix_link, image_file)
 
     try:
         os.makedirs(carousel_folder)
@@ -280,10 +277,3 @@ def uploadcarousel(
     except Exception as e:
         print(f"An Error Occured: {e}")
         return e
-
-
-@app.get("/getcarousel")
-def getcarousel(session: SessionDep):
-    statement = select(Carousel)
-    result = session.execute(statement).scalars().all()
-    return result

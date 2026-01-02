@@ -12,7 +12,7 @@ export default function SelectedMixCard() {
 	//
 	const fetcher = (url: any) => fetch(url).then((res) => res.json())
 
-	const { data, error, isLoading } = useSWR('http://localhost:9999/getmix/DarkPluggResearch1', fetcher, {
+	const { data, error, isLoading } = useSWR('http://localhost:9999/getmix/Unstable 1', fetcher, {
 		revalidateOnFocus: false,
 		revalidateOnReconnect: false,
 		revalidateIfStale: false,
@@ -21,7 +21,6 @@ export default function SelectedMixCard() {
 
 	if (data) {
 		JSON.stringify(data, null, 2)
-		console.log(data[0].mixAudioLocation)
 	}
 
 	return (

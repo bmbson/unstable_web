@@ -71,9 +71,7 @@ class audioContextHelper {
 	setAudioElement(audioRef: HTMLAudioElement | undefined) {
 		this.audioElement = audioRef;
 		this.audioElement.crossOrigin = 'Anonymous'
-		console.log(audioRef)
 		this.audioElement.load();
-		console.log("audioElement Selected")
 	};
 
 	createMediaElementSourceNode() {

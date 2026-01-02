@@ -21,7 +21,6 @@ export default function SelectedMixCard() {
 
 	if (data) {
 		JSON.stringify(data, null, 2)
-		console.log(data[0].mixAudioLocation)
 	}
 
 	return (

@@ -46,8 +46,7 @@ function SlideDisplay({ src, alt, index, controlL, controlR }: { src: string; al
 			{data && <Link id="linkWrapper" href={/mix/ + data[0].select_mix_link}>
 				<Image className="image"
 					sizes="auto auto"
-					fill={true} src={data[0].img_src} alt={"text"} ></Image>
-
+					fill={true} src={"http://10.1.0.10:9999" + data[0].img_src} alt={"text"} ></Image>
 			</Link>
 			}
 			<div className="slideDisplayControl" id="slideDisplayControl-R" onClick={controlR} ></div>

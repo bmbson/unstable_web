@@ -20,12 +20,6 @@ export default function SelectedMixCard() {
 		revalidateIfStale: false,
 	});
 
-	if (data) {
-		JSON.stringify(data, null, 2)
-	}
-	console.log(data)
-	console.log(`http://localhost:9999/getmix/${epath}`);
-
 	return (
 		<div id="selectedMixWrapper">
 			<div id='topInfo'>
@@ -36,7 +30,7 @@ export default function SelectedMixCard() {
 			</div>
 			<div id="artistInfoWrapper">
 				{isLoading && <p>Loading</p>}
-				{data && <MixCard mixName={data[0].mix_title} date="2016" mixUrl={"http://10.0.1.0:9999" + data[0].mix_audio_location} imageSrc={"http://10.1.0.10:9999" + data[0].mix_picture_location} artist={data[0].mix_creator} description={data[0].description} > </MixCard>}
+				{data && <MixCard mixName={data[0].mix_title} date="2016" mixUrl={"http://10.1.0.10:9999" + data[0].mix_audio_location} imageSrc={"http://10.1.0.10:9999" + data[0].mix_picture_location} artist={data[0].mix_creator} description={data[0].description} > </MixCard>}
 				<div id="description">
 					<p>Description:</p>
 					{isLoading && <p>Loading</p>}

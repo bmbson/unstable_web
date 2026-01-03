@@ -257,9 +257,12 @@ def uploadcarousel(
     session: SessionDep, select_mix_link: Annotated[str, Form()], image_file: UploadFile
 ):
     carousel_folder = Path(f"/app/static/carousel/{select_mix_link}")
+    sql_carousel_folder = Path(f"/static/carousel/{select_mix_link}")
 
     path = carousel_folder / image_file.filename
-    save_carousel_sql(select_mix_link, str(carousel_folder) + f"/{image_file.filename}")
+    save_carousel_sql(
+        select_mix_link, str(sql_carousel_folder) + f"/{image_file.filename}"
+    )
 
     try:
         os.makedirs(carousel_folder)

@@ -56,13 +56,6 @@ function BottomAudioControlBar() {
 		}
 	}, [currentElement]);
 
-	function testFunction() {
-		console.log(ctx.audioCtx)
-		console.log(ctx.audioElement!.src)
-		console.log(currentElement)
-		console.log(ctx.audioSourceNode)
-	}
-
 	return (
 		<div>
 			<audio
@@ -74,9 +67,9 @@ function BottomAudioControlBar() {
 				<div id="BottomAudioControlBar">
 					<div id="controlsWrapper">
 						<div className="playControlsWrapper">
-							<MdSkipPrevious onClick={() => ctx.getCTXInfo()} />
+							{/*<MdSkipPrevious onClick={() => ctx.getCTXInfo()} /> */}
 							<PlayPauseButton></PlayPauseButton>
-							<MdSkipNext onClick={() => testFunction()}></MdSkipNext>
+							{/*	<MdSkipNext onClick={() => testFunction()}></MdSkipNext> */}
 						</div>
 						<div className="nextButton"></div>
 						<VolumeControls></VolumeControls>

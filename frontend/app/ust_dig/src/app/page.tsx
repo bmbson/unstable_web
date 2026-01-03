@@ -1,17 +1,22 @@
 'use client'
 
-import Image from 'next/image'
 import './page.css';
 import SlideDisplay from '@/components/slide_display/slide_display';
 import CarouselIndicator from '@/components/carousel_indicator/carousel_indicator';
 import { useEffect, useState } from 'react';
-import { ctx } from './audioContextBackendClass';
+import useSWR from 'swr';
 
-const string = '/images/frontpage_images/sea.jpg'
 
 export default function Home() {
 	const [index, setIndex] = useState<number>(2);
 	const [autoPlay, setAutoPlay] = useState<boolean>(true);
+
+	const fetcher = (url: any) => fetch(url).then((res) => res.json())
+	const { data, error, isLoading } = useSWR('http://localhost:9999/getcarousel', fetcher, {
+		revalidateOnFocus: false,
+		revalidateOnReconnect: false,
+		revalidateIfStale: false,
+	});
 
 	function nextItem() {
 		if (index < 2) {
@@ -45,16 +50,17 @@ export default function Home() {
 		} else {
 
 		}
-	},); // optional dependency array
+	},);
 
 	return (
 		<main>
 			<div className="frontPageWrapper">
 				<div className="ImageWrapper">
-					<SlideDisplay controlL={() => prevItem()} controlR={() => nextItem()} src={string} alt="test" index={index}></SlideDisplay>
+					{data && <SlideDisplay controlL={() => prevItem()} controlR={() => nextItem()} src={"http://10.1.0.10:9999" + data[index].img_src} alt={data[index].select_mix_link ?? ""} index={index} link={data[index].select_mix_link ?? ""} ></SlideDisplay>}
 				</div>
 				<div className='CarouselWrapper'>
-					<CarouselIndicator elementAmount={3} currentIndex={index} pauseButton={() => toggleAutoPlay()} status={autoPlay} ></CarouselIndicator>
+					{data && <CarouselIndicator elementAmount={Object.keys(data).length - 1} currentIndex={index} pauseButton={() => toggleAutoPlay()} status={autoPlay} ></CarouselIndicator>
+					}
 				</div>
 			</div>
 		</main >

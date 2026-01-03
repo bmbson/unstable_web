@@ -4,39 +4,15 @@ import Image from 'next/image'
 import './slide_display.css'
 import Link from "next/link";
 
-interface slideDisplayImageItem {
-	title: string;
-	url: string;
-	imageUrl: string;
-}
-
-const items: slideDisplayImageItem[] = [
-	{
-		title: "Image One",
-		url: "/mixes",
-		imageUrl: "/images/frontpage_images/metal.jpg",
-	},
-	{
-		title: "Image Two",
-		url: "/mixes",
-		imageUrl: "/images/frontpage_images/greenpaisley.jpg",
-	},
-	{
-		title: "Image Three",
-		url: "/mixes",
-		imageUrl: "/images/frontpage_images/Untitled.png",
-	},
-];
-
-function SlideDisplay({ src, alt, index, controlL, controlR }: { src: string; alt: string; index: any, controlL: any, controlR: any }) {
+function SlideDisplay({ src, alt, index, link, controlL, controlR }: { src: string, alt: string, index: any, link: string, controlL: any, controlR: any }) {
 
 	return (
 		<div className="slideDisplayWrapper">
 			<div className="slideDisplayControl" id="slideDisplayControl-L" onClick={controlL} ></div>
-			<Link id="linkWrapper" href={items[index].url}>
+			<Link id="linkWrapper" href={link}>
 				<Image className="image"
 					sizes="auto auto"
-					fill={true} src={items[index].imageUrl} alt={items[index].title} ></Image>
+					fill={true} src={src} alt={"text"} ></Image>
 			</Link>
 			<div className="slideDisplayControl" id="slideDisplayControl-R" onClick={controlR} ></div>
 		</div >

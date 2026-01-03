@@ -53,7 +53,7 @@ services:
     ports:
       - 4000:4000
     volumes:
-      - ./upload-page/app:/app:Z 
+      - ./upload-page/src:/src:Z 
     networks:
       unstable-network:
        ipv4_address: 10.1.0.40

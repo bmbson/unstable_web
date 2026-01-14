@@ -1,0 +1,67 @@
+services:
+  frontend:
+    depends_on:
+      - db
+      - backend
+    image: unstable-frontend
+    restart: always
+    ports:
+      - 3000:3000
+    volumes:
+      - ./frontend/app/ust_dig/:/ust_dig:Z 
+    networks:
+      unstable-network:
+       ipv4_address: 10.1.0.50
+
+  backend:
+    depends_on:
+      - db  
+    image: unstable-backend 
+    ports:
+      - 9999:9999
+    volumes:
+      - ./backend/app:/app:Z
+    networks:
+      unstable-network:
+       ipv4_address: 10.1.0.10
+
+  db:
+    image: postgres:latest
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: changeme
+      POSTGRES_USER: changeme
+      POSTGRES_DB: db
+    ports:
+      - 5432:5432
+    networks:
+      unstable-network:
+        ipv4_address: 10.1.0.20
+ 
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+    networks:
+      unstable-network:
+       ipv4_address: 10.1.0.30
+
+  upload-page:
+    image: unstable-upload-page
+    restart: always
+    ports:
+      - 4000:4000
+    volumes:
+      - ./upload-page/src:/src:Z 
+    networks:
+      unstable-network:
+       ipv4_address: 10.1.0.40
+
+networks:
+  unstable-network:
+    name: unstable-network
+    driver: bridge 
+    ipam:
+      config:
+        - subnet: 10.1.0.0/16

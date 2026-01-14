@@ -20,10 +20,6 @@ export default function SelectedMixCard() {
 		revalidateIfStale: false,
 	});
 
-<<<<<<< HEAD
-
-=======
->>>>>>> frontpageLinking
 	return (
 		<div id="selectedMixWrapper">
 			<div id='topInfo'>

@@ -12,7 +12,6 @@ function MixPanel() {
 		revalidateIfStale: false,
 	});
 
-	console.log(data)
 	return (
 		<div id="mixPanel">
 			<ul id="mixCardList">

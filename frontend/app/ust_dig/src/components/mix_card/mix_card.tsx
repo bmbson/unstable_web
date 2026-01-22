@@ -16,11 +16,12 @@ interface Props {
 	'imageSrc'?: string | null;
 	'date': string;
 	'mixUrl'?: string;
+	'description': string;
 	width?: string;
 	height?: string;
 }
 
-function MixCard({ mixName, artist, mixUrl, date, width, height, imageSrc = null }: Props) {
+function MixCard({ mixName, artist, mixUrl, date, width, height, description, imageSrc = null }: Props) {
 	const bottomInfoRef = useRef<null | HTMLDivElement>(null);
 	const mixCardRef = useRef<null | HTMLDivElement>(null);
 	const mixCardAudioRef = useRef<HTMLMediaElement>(null);

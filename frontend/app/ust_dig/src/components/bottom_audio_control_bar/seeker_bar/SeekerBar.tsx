@@ -17,7 +17,7 @@ interface Props {
 }
 
 function SeekerBar(props: Props) {
-	const inputRef = useRef(null);
+	const inputRef = useRef<HTMLInputElement>(null);
 
 	const changeCurrentTime = useAudioContextHelperStore((state) => state.changeCurrentTime);
 	const setCurrentTime = useAudioContextHelperStore((state) => state.setCurrentTime);
@@ -29,7 +29,7 @@ function SeekerBar(props: Props) {
 
 
 	function seekerBarEffect() {
-		changeCurrentTime(inputRef.current.value);
+		changeCurrentTime(inputRef.current?.value);
 	}
 
 	useEffect(() => {
@@ -51,7 +51,7 @@ function SeekerBar(props: Props) {
 
 	return (<div id="seekerBar">
 		<p id="currentAudioTime">{props.currentTime}</p>
-		<input ref={inputRef} id="seekerBarSlider" type="range" min="0" onChange={() => {
+		<input ref={inputRef || 0} id="seekerBarSlider" type="range" min="0" onChange={() => {
 			seekerBarEffect()
 		}
 		} value={reverseFancyTimeFormat(props.currentTime)!} max={reverseFancyTimeFormat(props.audioDuration)!} step="any"></input>

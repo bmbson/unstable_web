@@ -18,17 +18,17 @@ class audioContextHelper {
 
 	initAudioContext() {
 		if (this.audioCtx != undefined) {
-			console.log('audioCTX already created.');
+			//console.log('audioCTX already created.');
 		} else {
 			this.audioCtx = new AudioContext;
-			console.log('audioCTX initialized.');
+			//console.log('audioCTX initialized.');
 		}
 	}
 
 	/*Need to figure a way to add audioNode to context*/
 	createAudioContext() {
 		if (this.audioCtx == undefined) {
-			console.log('Error: AudioContext not initialized!');
+			//console.log('Error: AudioContext not initialized!');
 		} else {
 			this.gainNode = this.audioCtx!.createGain();
 			this.createMediaElementSourceNode();
@@ -49,7 +49,7 @@ class audioContextHelper {
 				this.audioCtx.resume();
 			};
 		} else {
-			console.log('audioCtx is not defined (is it initialized?)');
+			// console.log('audioCtx is not defined (is it initialized?)');
 		};
 	};
 
@@ -61,7 +61,7 @@ class audioContextHelper {
 	closeAudioContext(context: AudioContext) {
 		context.close()
 		this.audioCtx = undefined
-		console.log('audioCTX closed.');
+		//console.log('audioCTX closed.');
 	};
 
 	changeAudioContextVolume(volume: number) {
@@ -70,19 +70,19 @@ class audioContextHelper {
 
 	setAudioElement(audioRef: HTMLAudioElement | undefined) {
 		this.audioElement = audioRef;
-		this.audioElement.crossOrigin = 'Anonymous'
-		this.audioElement.load();
+		this.audioElement!.crossOrigin = 'Anonymous'
+		this.audioElement!.load();
 	};
 
 	createMediaElementSourceNode() {
 		if (this.audioElement == null) {
-			console.log("audioElement is null")
+			//console.log("audioElement is null")
 		} else {
 			try {
 				this.audioSourceNode = this.audioCtx?.createMediaElementSource(this.audioElement!);
-				console.log("audioSourceNode created.")
+				//	console.log("audioSourceNode created.")
 			} catch (error) {
-				console.log(error);
+				//console.log(error);
 			};
 		};
 	};
@@ -91,14 +91,14 @@ class audioContextHelper {
 		if (audioRef?.src != undefined) {
 			ctx.audioElement!.src = audioRef!.src
 			ctx.audioElement!.load()
-			console.log("audio track changed.")
+			//console.log("audio track changed.")
 		}
 	}
 
 	connectAudioElements() {
 		this.audioSourceNode?.connect(this.gainNode);
 		this.gainNode.connect(this.audioCtx?.destination!);
-		console.log("audio elements connected")
+		//console.log("audio elements connected")
 	};
 
 	playAudioElement() {

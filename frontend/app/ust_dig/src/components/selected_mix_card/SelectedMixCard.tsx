@@ -30,7 +30,7 @@ export default function SelectedMixCard() {
 			</div>
 			<div id="artistInfoWrapper">
 				{isLoading && <p>Loading</p>}
-				{data && <MixCard mixName={data[0].mix_title} date="2016" mixUrl={"http://10.1.0.10:9999" + data[0].mix_audio_location} imageSrc={"http://10.1.0.10:9999" + data[0].mix_picture_location} artist={data[0].mix_creator} description={data[0].description} > </MixCard>}
+				{data && <MixCard mixName={data[0].mix_title} date="2016" mixUrl={"http://10.1.0.10:9999" + data[0].mix_audio_location} imageSrc={"http://10.1.0.10:9999" + data[0].mix_picture_location} artist={data[0].mix_creator} description={data[0].description} ></MixCard>}
 				<div id="description">
 					<p>Description:</p>
 					{isLoading && <p>Loading</p>}

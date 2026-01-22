@@ -56,7 +56,7 @@ export default function Home() {
 		<main>
 			<div className="frontPageWrapper">
 				<div className="ImageWrapper">
-					{data && <SlideDisplay controlL={() => prevItem()} controlR={() => nextItem()} src={"http://10.1.0.10:9999" + data[index].img_src} alt={data[index].select_mix_link ?? ""} index={index} link={data[index].select_mix_link ?? ""} ></SlideDisplay>}
+					{data && <SlideDisplay controlL={() => prevItem()} controlR={() => nextItem()} src={"http://10.1.0.10:9999" + (data[index].img_src ?? "")} alt={data[index].select_mix_link ?? ""} index={index} link={data[index].select_mix_link ?? ""} ></SlideDisplay>}
 				</div>
 				<div className='CarouselWrapper'>
 					{data && <CarouselIndicator elementAmount={Object.keys(data).length - 1} currentIndex={index} pauseButton={() => toggleAutoPlay()} status={autoPlay} ></CarouselIndicator>

@@ -25,7 +25,7 @@ function BottomAudioControlBar() {
 	const setIsAudioPlaying = useAudioContextHelperStore((state => state.setIsAudioPlaying));
 	const setAudioLength = useAudioContextHelperStore((state) => state.setAudioLength);
 
-	const mixRef = useRef<null | HTMLAudioElement | undefined>(undefined);
+	const mixRef = useRef<HTMLAudioElement>(null);
 	useEffect(() => {
 		ctx.initAudioContext();
 		ctx.setAudioElement(mixRef.current!)
@@ -42,13 +42,10 @@ function BottomAudioControlBar() {
 
 	useEffect(() => {
 		if (currentElement) {
-			console.log("New track selected:", currentElement.src);
-			console.log(extractAfterLastSlashUrl(mixRef.current!.src) + " current");
-			console.log(mixRef.current?.getAttribute("src") + " current getAttribute");
 			// Eerste mixRef is null omdat de audio tag nog niet gerendered is met de currentElement.
 			ctx.audioElement!.pause();
 			//ctx.audioElement!.src = mixRef.current!.src
-			ctx.audioElement!.src = mixRef.current?.getAttribute('src');
+			ctx.audioElement!.src = mixRef.current?.getAttribute('src') ?? "";
 			ctx.audioElement!.load();
 			setIsAudioPlaying(true);
 			ctx.resumeAudioContext();
@@ -59,7 +56,7 @@ function BottomAudioControlBar() {
 	return (
 		<div>
 			<audio
-				ref={mixRef}
+				ref={mixRef ?? undefined}
 				// If currentElement exists, calculate the path. Otherwise, set src to undefined or ""
 				src={currentElement ? currentElement.src : null}
 			/>

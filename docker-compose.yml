@@ -43,6 +43,8 @@ services:
     networks:
       unstable-network:
         ipv4_address: 10.1.0.20
+    volumes:
+      - /db/pgdata:/var/lib/postgresql:Z
  
   adminer:
     image: adminer

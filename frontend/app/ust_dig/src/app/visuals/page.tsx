@@ -6,7 +6,7 @@ import { P5Canvas, Sketch } from "@p5-wrapper/react"
 
 
 const sketch: Sketch = p5 => {
-	p5.setup = () => { p5.createCanvas(1200, 1200, p5.WEBGL) };
+	p5.setup = () => { p5.createCanvas(1000, 1000, p5.WEBGL) };
 
 	p5.draw = () => {
 		p5.background(0);

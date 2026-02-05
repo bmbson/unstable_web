@@ -1,6 +1,5 @@
 'use client';
 import useSWR from 'swr';
-import VisualCard from '../visual_card/visual_card';
 import './SelectedMixCard.css';
 import { usePathname, useParams } from 'next/navigation';
 import MixCard from '../mix_card/mix_card';

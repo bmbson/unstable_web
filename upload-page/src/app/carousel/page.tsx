@@ -22,10 +22,10 @@ export default function Carousel() {
 
 
 	return (
-		<div className="flex-col items-center ">
+		<div className="flex-col items-center justify-center ">
 			<Link className="text-3xl font-bold underline " href="/carousel" >Carousel</Link>
 			<Link className="text-3xl font-bold underline " href="/" >Home</Link>
-			<form id="CarouselForm" action={uploadCarousel}>
+			<form id="CarouselForm" action={uploadCarousel} class="flex flex-col items-center gap-10">
 				<h1> Upload </h1>
 				<p>Mix Name</p>
 				<select name='select_mix_link' id='select_mix_link'>

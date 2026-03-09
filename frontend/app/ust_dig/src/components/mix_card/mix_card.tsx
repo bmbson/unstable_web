@@ -86,7 +86,7 @@ function MixCard({ mixName, artist, mixUrl, date, width, height, description, im
 						}
 					}}>
 						<div id="playPauseImage">
-							{isAudioPlaying && extractAfterLastSlashUrl(mixUrl) == extractAfterLastSlashUrl(currentElement.src) ? <MdOutlinePauseCircleOutline size={150}></MdOutlinePauseCircleOutline> : <MdOutlinePlayCircleOutline size={150}></MdOutlinePlayCircleOutline>}
+							{isAudioPlaying && encodeURIComponent(extractAfterLastSlashUrl(mixUrl) ?? "") == extractAfterLastSlashUrl(currentElement.src) ? <MdOutlinePauseCircleOutline size={150}></MdOutlinePauseCircleOutline> : <MdOutlinePlayCircleOutline size={150}></MdOutlinePlayCircleOutline>}
 						</div>
 					</div>
 					<div className="bottomInfo" ref={bottomInfoRef}>

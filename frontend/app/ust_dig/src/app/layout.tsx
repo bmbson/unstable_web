@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
+import localFont from 'next/font/local'
 import './globals.css'
 import TopNavigationBar from '@/components/top_navigation_bar/TopNavigationBar'
 import BottomAudioControlBar from '@/components/bottom_audio_control_bar/BottomAudioControlBar'
